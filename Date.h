@@ -7,6 +7,7 @@ using namespace std;
 class Date
 {
     public:
+  // Default constructor for date
         Date ();
 	Date (const Date & D);
 	Date (int inMonth, int inDay, int inYear);
