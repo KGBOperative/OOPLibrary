@@ -10,9 +10,6 @@
 #include <vector>
 #include "Library.h"
 
-#define DEBUG 0
-#define debug if (DEBUG) cout
-
 using namespace std;
 
 class Asset;
