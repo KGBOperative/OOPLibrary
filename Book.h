@@ -10,9 +10,6 @@
 #include "Asset.h"
 #include "Date.h"
 
-#define DEBUG 0
-#define debug if (DEBUG) cout
-
 using namespace std;
 
 class Book : public Asset
