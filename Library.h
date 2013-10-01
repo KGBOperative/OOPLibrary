@@ -17,7 +17,7 @@ class Library
     public:
         // Enumerated types for Library Objects
         enum LibType {LIBRARY, MEMBER, ASSET, BOOK, PERIODICAL};
-	// The default constructor creaes a new library object.
+	// The default constructor creates a new library object.
 	Library ();
 	// This constructor will create a new library object identical to the passed library
 	// object.
