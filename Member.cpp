@@ -3,6 +3,7 @@
 // Contents: This file contains the implementation of the Member class
 
 #include "Member.h"
+#include "Asset.h"
 
 Member::Member(void) {
     Type = MEMBER;
@@ -38,4 +39,20 @@ Member &Member::operator=(const Member &m) {
     checkedOut = m.checkedOut;
 }
 
+LibType Member::IsA(void) const {
+    return MEMBER;
+}
+
+void Member::CheckOut(Asset *asset) {
+    checkedOut.push_back(asset);
+    asset->CheckOut(this);
+}
+
+void Member::Return(string assetID) {
+    for (int i; i < checkedOut.size(); i++)
+        if (checkedOut[i]->ID == assetID) {
+	    checkedOut[i]->Return();
+	    checkedOut.erase(i);
+      }
+}
 
