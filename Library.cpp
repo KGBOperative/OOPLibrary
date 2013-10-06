@@ -65,7 +65,7 @@ virtual void Library::ReadIn (istream & input);
 virtual void Library::WriteOut (ostream & output);
 {
     output << "Type: LIBRARY" << endl;
-    output << "Name: " << S.Name << endl;
-    output << "ID: "   << S.ID   << endl;
+    output << "Name: " << Name << endl;
+    output << "ID: "   << ID   << endl;
 }
 
