@@ -15,7 +15,7 @@ Book::Book ()
     Author = "";
     ISBN = "";
     CopyNumber = 0;
-    CheckedOut = NULL;
+    CheckedOut = Date (0, 0, 0);
     CheckedOutBy = NULL;
 }
 
@@ -52,13 +52,13 @@ void Book::CheckOut (Member * member)
 {
     time_t t = time(0);
     struct tm * now = localtime (&t);
-    CheckedOut = Date (now->tm_year + 1900, now->tm_mon + 1, now->tm_day);
+    CheckedOut = Date (now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
     CheckedOutBy = member;
 }
 
 void Book::Return ()
 {
-    CheckedOut = NULL;
+    CheckedOut = Date (0, 0, 0);
     CheckedOutBy = NULL;
 }
 

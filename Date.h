@@ -66,6 +66,7 @@ class Date
 	// This output operator will output the date in the passed Date
 	// object in the form mm/dd/yyyy.
 	friend ostream & operator << (ostream & outs, const Date & D);
+
     private:
 	int month;
 	int day;

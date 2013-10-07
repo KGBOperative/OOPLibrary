@@ -37,7 +37,7 @@ class Book : public Asset
 	LibType IsA () const;
 
 	// This function sets CheckedOut to the current date and designates
-	// the past member as having checked out the Book.
+	// the passed member as having checked out the Book.
 	void CheckOut (Member * member);
 
 	// This function designates the Book object as being checked in.

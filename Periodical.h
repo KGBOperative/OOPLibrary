@@ -13,12 +13,42 @@
 
 using namespace std;
 
-enum PeriodicalType {FICTION, NONFICTION};
-
 class Periodical : public Asset
 {
     public:
-	// More Methods - see Member
+        // Enumerated type for Periodical classification.
+        enum PeriodicalType {FICTION, NONFICTION};
+
+	// The default constructor creates a new Periodical object.
+        Periodical ();
+
+        // This copy constructor will create a new Periodical object identical to the
+	// passed Periodical object.
+	Periodical (const Periodical & P);
+
+	// This destructor currently does nothing.
+	~Periodical ();
+
+	// This assignment operator will copy the values of one Periodical object
+	// to another.
+	Periodical & operator = (const Periodical & P);
+
+	// The IsA function will return the appropriate LibType.
+	LibType IsA () const;
+
+	// This function sets CheckedOut to the current date and designates
+	// the passed member as having checked out the Book.
+	void CheckOut (Member * member);
+
+	// This function designates the Periodical object as being checked in.
+	void Return ();
+
+	// This function reads the state of the Periodical object from input.
+	void ReadIn (istream & input);
+
+	// This function writes the state of the Periodical object to output.
+	void WriteOut (ostream & output);
+
     private:
         struct Issue
 	{
@@ -29,6 +59,7 @@ class Periodical : public Asset
 	    Member * CheckedOutBy;
 	    int CopyNumber;
 	};
+	PeriodicalType Type;
 	String ISSN;
 	vector <Issue> Issues;
 };
