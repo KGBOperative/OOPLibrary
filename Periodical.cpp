@@ -1,5 +1,5 @@
 // File: Periodical.cpp
-// Author: Kyle Janssen
+// Authors: Amandeep Gill, Kyle Janssen
 // Contents: This file contains the implementation of a class called
 // Periodical.
 
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Periodical::Periodical ()
+Periodical::Periodical (void)
 {
     Library::Type = PERIODICAL;  
     ISSN = "";
@@ -33,7 +33,7 @@ Periodical & Periodical::operator = (const Periodical & P)
     Issues = P.Issues;
 }
 
-LibType Periodical::IsA () const
+LibType Periodical::IsA (void) const
 {
     return PERIODICAL;
 }
@@ -51,11 +51,15 @@ void Periodical::CheckOut (Member * member)
     Issues[i].CheckedOut = Date (now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
 }
 
-void Periodical::Return ()
+void Periodical::Return (void)
 {
-    // Unsure at this point how to determine which issue to return.
-    // This function will need either the number of the issue or the
-    // identity of the member who checked it out.
+    for (int i = 0; i < Issues.size(); ++i) {
+        if (!Issues[i].CheckedOut.isNull()) {
+            Issues[i].CheckedOut.setNull();
+            if (Issues[i].CheckedOutBy != NULL)
+                Issues[i].CheckedOutBy = NULL;
+        }
+    }
 }
 
 void Periodical::ReadIn (istream & input)
@@ -73,9 +77,19 @@ void Periodical::WriteOut (ostream & output)
     output << "Issues: " << Issues.size() << endl;
     for (int i = 0; i < Issues.size(); i++) {
         output << "Volume: " << Issues[i].Volume;
-	output << "      Number: " << Issues[i].Number << endl;
-	output << "Publication_Date: " << Issues[i].PubDate << endl;
-	output << "Checked_Out_On: " << Issues[i].CheckedOut << endl;;
-	output << "Checked_Out_By: " << Issues[i].CheckedOutBy->ID << endl;
+        output << "Number: " << Issues[i].Number << endl;
+        output << "Publication_Date: " << Issues[i].PubDate << endl;
+        output << "Checked_Out_On: " << Issues[i].CheckedOut << endl;;
+        output << "Checked_Out_By: ";
+        if (Issues[i].CheckedOutBy != NULL)
+            output << Issues[i].CheckedOutBy->ID << endl;
+        else
+            output << "None.\n";
     }
+}
+
+Periodical::Issue::Issue(void)
+{
+    Volume = Number = CopyNumber = 0;
+    CheckedOutBy = NULL;
 }

@@ -18,9 +18,11 @@ class Asset : public Library
         // Enumerated type for Asset Classification
         enum AssetType {SHORT, LITERARY, MYSTERY, SCIFI, SELFHELP, BIOGRAPHY, COOKING, SPORTS};
 
-	// More methods - see Member
+        // Default constructor
+        Asset(void);
+
     protected:
-	AssetType Type;
+        AssetType Type;
     private:
 };
 

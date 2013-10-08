@@ -10,7 +10,7 @@ using namespace std;
 
 Date::Date ()
 {
-    month = day = year = 0;
+    month = day = year = -1;
 }
 
 Date::Date (const Date & D)
@@ -69,34 +69,51 @@ int Date::GetYear () const
     return year;
 }
 
+void Date::SetNull()
+{
+    day = month = year = -1;
+}
+
+bool isNull() const
+{
+    return (day == -1 || month == -1 || year == -1) ? true : false;
+}
+
 int Date::operator - (const Date & D) const
 {
-  return julian_days(year, month, day) - julian_days(D.year, D.month, D.day);
+    return isNull() ? julian_days(D.year, D.month, D.day) : julian_days(year, month, day) - julian_days(D.year, D.month, D.day);
 }
 
 bool Date::operator < (const Date & D) const
 {
-    if (year != D.year)
-        return year < D.year;
+    if (!isNull()) {
+        if (year != D.year)
+            return year < D.year;
 
-    else if (month != D.month)
-        return month < D.month;
+        else if (month != D.month)
+            return month < D.month;
 
+        else
+            return day < D.day;
+    }
     else
-        return day < D.day;
+        return D.isNull() ? false : true;
 }
 
 bool Date::operator > (const Date & D) const
 {
-    if (year != D.year)
-        return year > D.year;
+    if (!isNull()) {
+        if (year != D.year)
+            return year > D.year;
 
-    else if (month != D.month)
-        return month > D.month;
+        else if (month != D.month)
+            return month > D.month;
 
+        else
+            return day > D.day;
+    }
     else
-        return day > D.day;
-
+        return D.isNull() ? false : true;
 }
 
 istream & operator >> (istream & ins, Date & D)
@@ -112,7 +129,12 @@ istream & operator >> (istream & ins, Date & D)
 
 ostream & operator << (ostream & outs, const Date & D)
 {
-    outs << setw(2) << setfill('0') <<  D.month << "/" << D.day << "/" << D.year;
+    outs << setw(2) << setfill('0');
+
+    if (!isNull()) 
+         outs <<  D.month << "/" << D.day << "/" << D.year;
+    else
+        outs << "NULL/NULL/NULL";
 
     return outs;
 }
