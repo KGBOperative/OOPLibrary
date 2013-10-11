@@ -58,6 +58,12 @@ class Library
         // This function returns the asset from the member given
         static void Return (Library * member, Library *asset);
 
+        // overloaded equality operator for Library pointers
+        bool operator==(const Library *lib1, const Library *lib2);
+
+        // overloaded lessthan operator for Library pointers
+        bool operator<(const Library *lib1, const Library *lib2);
+       
     protected:
         // This function is called by the static function CheckOut
         // The behavior of this function is defined as follows
