@@ -48,11 +48,6 @@ LibType Book::IsA () const
     return BOOK;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void Book::CheckOut (Library * member)
-=======
-=======
 void Book::SetType (string TypeS)
 {
     switch (TypeS)
@@ -63,9 +58,7 @@ void Book::SetType (string TypeS)
     }
 }
 
->>>>>>> 83ad3fd44e3e2456257442d3ca658f745a0df2be
-void Book::CheckOut (Library * L)
->>>>>>> 4bc081e375eeb55d0571c9353f359f529a905a79
+void Book::CheckOut (Library * member)
 {
     time_t t = time(0);
     struct tm * now = localtime (&t);
