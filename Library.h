@@ -34,6 +34,8 @@ class Library
 	friend ostream & operator << (ostream & outs, const Library & S);
 	// This function sets Type based on a string value.
 	virtual void SetType (string TypeS);
+	// This function returns Type as a string.
+	virtual string GetType () const;
 	//
 	virtual void CheckOut (Library * L);
 	//

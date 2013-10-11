@@ -29,7 +29,7 @@ Library & Library::operator = (const Library & S);
 
 virtual LibType Library::IsA () const;
 {
-    return LIBRARY;
+    return Type;
 }
 
 
@@ -56,6 +56,19 @@ virtual void Library::SetType (string TypeS)
         case "BOOK": Type = BOOK; break;
         case "PERIODICAL": Type = PERIODICAL; break;
         default: cout << "Not a valid LibType" << endl;
+    }
+}
+
+virtual string Library::GetType () const
+{
+    switch (Type)
+    {
+        case LIBRARY: return "LIBRARY";
+        case MEMBER: return "MEMBER";
+        case ASSET: return "ASSET";
+        case BOOK: return "BOOK";
+        case PERIODICAL: return "PERIODICALa";
+        default: return "";
     }
 }
 

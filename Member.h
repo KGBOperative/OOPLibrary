@@ -30,9 +30,6 @@ cleass Member: public Library
         // This assignment operator will copy one object to another of the same type.
         Member & operator = (const Member & m);
         
-        // The IsA function will return the appropriate LibType value.
-        LibType IsA () const;
-        
         // This function adds the given Asset to the list off checked-out Assets
         // additionally, marks the Asset as checked out according to the Asset
         void CheckOut (Library *asset);

@@ -38,24 +38,14 @@ Member &Member::operator=(const Member &m) {
     checkedOut = m.checkedOut;
 }
 
-LibType Member::IsA(void) const {
-    return MEMBER;
-}
-
-<<<<<<< HEAD
-void Member::CheckOut(Member *asset) {
-    checkedOut.push_back(asset);
-    asset->CheckOut(this);
-=======
 void Member::CheckOut(Library *L) {
     checkedOut.push_back(L);
     L->CheckOut(this);
->>>>>>> 4bc081e375eeb55d0571c9353f359f529a905a79
 }
 
-void Member::Return(string assetID) {
+void Member::Return(Library *L) {
     for (int i; i < checkedOut.size(); i++)
-        if (checkedOut[i]->ID == assetID) {
+        if (checkedOut[i] == L) {
 	    checkedOut[i]->Return();
 	    checkedOut.erase(i);
       }
