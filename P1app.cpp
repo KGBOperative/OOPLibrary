@@ -26,7 +26,7 @@ void addAsset (lib & L);
 void removeAsset (lib & L);
 void memCheckout (lib & L);
 void memReturn (lib & L);
-void makeReport(lib & L);
+void makeReport(lib & L const);
 
 int main()
 {
@@ -110,7 +110,7 @@ void loadLib(lib & L)
 }
 
 void saveLib(lib & L)
-{return}
+{return;}
 
 void addMember(lib & L)
 {
@@ -123,14 +123,122 @@ void addMember(lib & L)
 	cout << "\nMember Address: "
 	cin >> address;
 	cout << "\nMember City: "
-	cin >> city;
+    cin >> city;
 	cout << "\nMember State: "
 	cin >> state;
 	cout << "\nMember Zip: "
 	cin >> zip;
 	cout << "\nMember Phone #: "
 	cin >> phone;
+	cout << endl;
+	Member newMem = new Member(name, id, address, city, state, zip, phone);
+	L.members.push_back(newMem);
+	return;
+}
 
-	
+void removeMember(lib & L)
+{
+	string targId;
+	cout << "Delete current memeber:\nID of member you wish to erase: ";
+	cin >> targId;
+	for (int i=0;i<L.members.size();i++)
+		if (L.members[i].getID() == targId)
+			L.members[i].erase(L.members.begin()+i)
+	return;
+}
 
 }
+void addAsset(lib & L)
+{
+	char choice;
+	bool isval = false; 
+	while(isval == false)
+	{
+	    cout << "Add new Asset:\nEnter a type -\na) Book\nb) Periodical\n";
+	    cin >> choice; 
+	    tolower(choice);
+	    if (choice != 'a' && choice != 'b')
+	    	cout << "Invalid choice\n";
+	}
+	// Book 
+	if (choice == 'a')
+	{
+		string name; string id; string asType; string author; string isbn; 
+		string bookType; 
+		cout << "Create new Book:\nBook Title: ";
+		cin >> name;
+		cout << "\nBook ID: ";
+		cin >> id;
+		cout << "\nAsset Type: ";
+		cin >> asType;
+		cout << "\nAuthor: ";
+		cin >> author;
+		cout << "\nISBN: ";
+		cin >> isbn;
+		cout << "\nBook Type: ";
+		cin >> bookType;
+		cout << endl;
+		Book newBook = new Book(name, id, asType, author, isbn, bookType);
+		L.assets.push_back(newBook);
+		return;
+	}	
+	// Periodical 
+	else
+	{
+		string name; string id; string asType; string issn; int numIssues; int volume; 
+		int volNum; Date pubDate;  
+		cout << "Create new Periodical:\nPeriodical Title: ";
+		cin >> name;
+		cout << "\nPeriodical ID: ";
+		cin >> id;
+		cout << "\nAsset Type: ";
+		cin >> asType;
+		cout << "\nISSN: ";
+		cin >> author;
+		cout << "\nNumber of issues to store: ";
+		cin >> numIssues;
+		for (int i=0;i<numIssues;i++)
+		{
+			cout << "\nVolume: ";
+			cin >> volume;
+			cout << "\nNumber: "
+			cin >> volNum;
+			cout << "\nPublication Date (MM/DD/YYYY): "
+			cin >> pubDate;
+			Periodical newPeri = new Periodical(name, id, asType, issn, numIssues,
+												volume, volNum, pubDate);
+			L.assets.push_back(newPeri);
+		}
+		cout << endl;
+		return;
+	}
+}
+
+void memCheckout()
+{return;}
+
+void memReturn()
+{return;}
+
+void makeReport(lib & L const)
+{
+	char choice = NULL; 
+	while (choice != 'q')
+	{
+		cout << "Report Menu:\na) List overdue Assets\n";
+		cout << "b) List members with overdue Assets\n";
+		cout << "c) List members in a specified area code\nq) Quit\n";
+		cin >> choice; 
+		tolower(choice);
+		if (choice == 'a')
+			return; 
+		else if (choice == 'b')
+			return;
+		else if (choice == 'c')
+			return;
+		else if (choice != 'q')
+			cout << "Invalid choice\n";
+	}
+}
+
+
