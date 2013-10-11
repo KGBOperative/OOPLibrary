@@ -21,6 +21,9 @@ class Asset : public Library
 	// This function sets Type based on a sring value.
 	virtual void SetType (string TypeS);
 
+	// This function returs Type as a string.
+	virtual string GetType () const;
+
         // Default constructor
         Asset(void);
 

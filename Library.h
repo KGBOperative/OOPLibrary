@@ -17,33 +17,34 @@ class Library
     public:
         // Enumerated types for Library Objects
         enum LibType {LIBRARY, MEMBER, ASSET, BOOK, PERIODICAL};
-        // The default constructor creates a new library object.
-        Library ();
-        // This constructor will create a new library object identical to the passed library
-        // object.
-        Library (const Library & S);
-        // This destructor currently does nothing.
-        ~Library ();
-        // This assignment operator will copy one object to another of the same type.
-        Library & operator = (const Library & S);
-        // The IsA function will return the appropriate LibType value.
-        virtual LibType IsA () const;
-        // The input operator will call the ReadIn function for the passed library object.
-        friend istream & operator >> (istream & outs, const Library & S);
-        // The output operator will call the WriteOut function for the passed library object.
-        friend ostream & operator << (ostream & outs, const Library & S);
-        // This function sets Type based on a string value.
-        virtual void SetType (string TypeS);
-        // This function returns Type as a string.
-        virtual string GetType () const;
-        //
-        virtual void CheckOut (Library * L);
-        //
-        virtual void Return (Library * L);
-        //
-        virtual void ReadIn (istream & input);
-        //
-        virtual void WriteOut (ostream & output);
+	// The default constructor creates a new library object.
+	Library ();
+	// This constructor will create a new library object identical to the passed library
+	// object.
+	Library (const Library & S);
+	// This destructor currently does nothing.
+	~Library ();
+	// This assignment operator will copy one object to another of the same type.
+	Library & operator = (const Library & S);
+	// The IsA function will return the appropriate LibType value.
+	LibType IsA () const;
+	// The input operator will call the ReadIn function for the passed library object.
+	friend istream & operator >> (istream & outs, const Library & S);
+	// The output operator will call the WriteOut function for the passed library object.
+	friend ostream & operator << (ostream & outs, const Library & S);
+	// This function sets Type based on a string value.
+	virtual void SetType (string TypeS);
+	// This function returns Type as a string.
+	virtual string GetType () const;
+	//
+	virtual void CheckOut (Library * L);
+	//
+	virtual void Return (Library * L);
+	//
+	virtual void ReadIn (istream & input);
+	//
+	virtual void WriteOut (ostream & output);
+
     protected:
         LibType Type;
         string Name;

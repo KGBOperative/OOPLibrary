@@ -38,6 +38,9 @@ class Periodical : public Asset
 	// This function sets Type based on a string value.
 	void SetType (string TypeS);
 
+	// This function returns Type as a string.
+	void GetString () const;
+
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
         void CheckOut (Library * member);

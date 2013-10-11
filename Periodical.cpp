@@ -48,6 +48,15 @@ void Periodical::SetType (string TypeS)
     }
 }
 
+string Periodical::GetType () const
+{
+    switch (Type)
+    {
+        case FICTION: return "FICTION";
+        case NONFICTION: return "NONFICTION";
+        default: return "";
+    }
+}
 
 void Periodical::CheckOut (Library * member)
 {

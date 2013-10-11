@@ -20,3 +20,19 @@ void Asset::SetType (string TypeS)
         default: cout << "Not a valid LibType" << endl;
     }
 }
+
+virtual string Asset::GetType () const
+{
+    switch (Type)
+    {
+        case SHORT: return "SHORT";
+        case LITERARY: return "LITERARY";
+        case MYSTERY: return "MYSTERY";
+        case SCIFI: return "SCIFI";
+        case SELFHELP: return "SELFHELP";
+        case BIOGRAPHY: return "BIOGRAPHY";
+        case COOKING: return "COOKING";
+        case SPORTS: return "SPORTS";
+        default: return "";
+    }
+}

@@ -58,6 +58,16 @@ void Book::SetType (string TypeS)
     }
 }
 
+string Book::SetType () const
+{
+    switch (Type)
+    {
+        case FICTION: return "FICTION";
+        case NONFICTION: return "NONFICTION";
+        default: return "";
+    }
+}
+
 void Book::CheckOut (Library * member)
 {
     time_t t = time(0);
