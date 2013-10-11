@@ -38,7 +38,22 @@ LibType Periodical::IsA (void) const
     return PERIODICAL;
 }
 
+<<<<<<< HEAD
 void Periodical::CheckOut (Library * member)
+=======
+void Periodical::SetType (string TypeS)
+{
+    switch (TypeS)
+    {
+        case "FICTION": Type = FICTION; break;
+        case "NONFICTION": Type = NONFICTION; break;
+        default: cout << "Not a valid Type" << endl;
+    }
+}
+
+
+void Periodical::CheckOut (Member * member)
+>>>>>>> 83ad3fd44e3e2456257442d3ca658f745a0df2be
 {
     int i = 0;
     while (Issues[i].CheckedOutBy != NULL)

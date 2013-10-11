@@ -7,13 +7,16 @@ Asset::Asset(void) {
 
 void Asset::SetType (string TypeS)
 {
-  switch (TypeS)
+    switch (TypeS)
     {
-    case "LIBRARY": Type = LIBRARY; break;
-    case "MEMBER": Type = MEMBER; break;
-    case "ASSET": Type = ASSET; break;
-    case "BOOK": Type = BOOK; break;
-    case "PERIODICAL": Type = PERIODICAL; break;
-    default: cout << "Not a valid LibType" << endl;
+        case "SHORT": Type = SHORT; break;
+        case "LITERARY": Type = LITERARY; break;
+        case "MYSTERY": Type = MYSTERY; break;
+        case "SCIFI": Type = SCIFI; break;
+        case "SELFHELP": Type = SELFHELP; break;
+        case "BIOGRAPHY": Type = BIOGRAPHY; break;
+        case "COOKING": Type = COOKING; break;
+        case "SPORTS": Type = SPORTS; break;
+        default: cout << "Not a valid LibType" << endl;
     }
 }
