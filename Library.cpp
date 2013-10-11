@@ -46,6 +46,18 @@ friend ostream & operator << (ostream & outs, const Library & S);
     return outs;
 }
 
+virtual void Library::SetType (string TypeS)
+{
+    switch (TypeS)
+    {
+        case "LIBRARY": Type = LIBRARY; break;
+        case "MEMBER": Type = MEMBER; break;
+        case "ASSET": Type = ASSET; break;
+        case "BOOK": Type = BOOK; break;
+        case "PERIODICAL": Type = PERIODICAL; break;
+        default: cout << "Not a valid LibType" << endl;
+    }
+}
 
 virtual void Library::CheckOut ();
 {

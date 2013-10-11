@@ -43,9 +43,9 @@ LibType Member::IsA(void) const {
     return MEMBER;
 }
 
-void Member::CheckOut(Asset *asset) {
-    checkedOut.push_back(asset);
-    asset->CheckOut(this);
+void Member::CheckOut(Library *L) {
+    checkedOut.push_back(L);
+    L->CheckOut(this);
 }
 
 void Member::Return(string assetID) {

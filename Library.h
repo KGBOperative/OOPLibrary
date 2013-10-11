@@ -32,10 +32,12 @@ class Library
 	friend istream & operator >> (istream & outs, const Library & S);
 	// The output operator will call the WriteOut function for the passed library object.
 	friend ostream & operator << (ostream & outs, const Library & S);
+	// This function sets Type based on a string value.
+	virtual void SetType (string TypeS);
 	//
-	virtual void CheckOut ();
+	virtual void CheckOut (Library * L);
 	//
-	virtual void Return ();
+	virtual void Return (Library * L);
 	//
 	virtual void ReadIn (istream & input);
 	//
