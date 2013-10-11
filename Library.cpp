@@ -72,13 +72,17 @@ virtual string Library::GetType () const
     }
 }
 
-virtual void Library::CheckOut ();
+void Library::CheckOut (Library *member, Library *asset, Date date);
 {
+    member->Add(asset, date);
+    asset->Add(member, date);
 }
 
 
-virtual void Library::Return ();
+virtual void Library::Return (Library *member, Library *asset);
 {
+    member->Remove(asset);
+    asset->Remove(member);
 }
 
 
