@@ -72,13 +72,17 @@ virtual string Library::GetType () const
     }
 }
 
-virtual void Library::CheckOut ();
+void Library::CheckOut (Library *member, Library *asset, Date date);
 {
+    member->Add(asset, date);
+    asset->Add(member, date);
 }
 
 
-virtual void Library::Return ();
+virtual void Library::Return (Library *member, Library *asset);
 {
+    member->Remove(asset);
+    asset->Remove(member);
 }
 
 
@@ -92,5 +96,13 @@ virtual void Library::WriteOut (ostream & output);
     output << "Type: LIBRARY" << endl;
     output << "Name: " << Name << endl;
     output << "ID: "   << ID   << endl;
+}
+
+bool Library::operator==(const Library *lib1, const Library *lib2) {
+    return lib1->ID == lib2->ID;
+}
+
+bool Library::operator<(const Library *lib1, const Library *lib2) {
+    return lib1->ID < lib2->ID;
 }
 
