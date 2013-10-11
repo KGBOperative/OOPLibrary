@@ -98,3 +98,11 @@ virtual void Library::WriteOut (ostream & output);
     output << "ID: "   << ID   << endl;
 }
 
+bool Library::operator==(const Library *lib1, const Library *lib2) {
+    return lib1->ID == lib2->ID;
+}
+
+bool Library::operator<(const Library *lib1, const Library *lib2) {
+    return lib1->ID < lib2->ID;
+}
+
