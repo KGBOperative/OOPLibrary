@@ -38,6 +38,17 @@ LibType Periodical::IsA (void) const
     return PERIODICAL;
 }
 
+void Periodical::SetType (string TypeS)
+{
+    switch (TypeS)
+    {
+        case "FICTION": Type = FICTION; break;
+        case "NONFICTION": Type = NONFICTION; break;
+        default: cout << "Not a valid Type" << endl;
+    }
+}
+
+
 void Periodical::CheckOut (Member * member)
 {
     int i = 0;

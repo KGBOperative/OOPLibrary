@@ -48,6 +48,16 @@ LibType Book::IsA () const
     return BOOK;
 }
 
+void Book::SetType (string TypeS)
+{
+    switch (TypeS)
+    {
+        case "FICTION": Type = FICTION; break;
+        case "NONFICTION": Type = NONFICTION; break;
+        default: cout << "Not a valid Type" << endl;
+    }
+}
+
 void Book::CheckOut (Library * L)
 {
     time_t t = time(0);
