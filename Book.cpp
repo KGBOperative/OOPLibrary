@@ -84,29 +84,29 @@ void Book::Return ()
 
 void Book::ReadIn (istream & input)
 {
-    input.ignore(256, ' ');
-    Name = input.getline();
-
-    input.ignore(256, ' ');
-    ID = input.getline();
-
-    input.ignore(256, ' ');
-    Asset::Type = input.getline();
-
-    input.ignore(256, ' ');
-    Author = input.getline();
-
-    input.ignore(256, ' ');
-    ISBN = input.getline();
-
-    input.ignore(256, ' ');
-    Type = input.getline();
-
-    input.ignore(256, ' ');
-    input >> CheckedOut;
-
-    input.ignore(256, ' ');
-    // need to convert ID to pointer to library object
+    for (string value; input.good(); input >> value) {
+    
+        if (value == "Name:") {
+	    Name = input.getline();
+	} else if (value == "ID:") {
+	    input >> ID;
+	} else if (value == "Asset_Type:") {
+	    string type;
+	    input >> type;
+	    Asset::SetType(type);
+	} else if (value == "Author:") {
+	    Author = input.getline();
+	} else if (value == "ISBN") {
+	    input >> ISBN;
+	} else if (value == "Type:") {
+	    string type;
+	    input >> type;
+	    SetType(type);
+	} else if (value == "Checked_Out_On") {
+	  input >> CheckedOut;
+	  return;
+	}
+    }
 }
 
 void Book::WriteOut (ostream & output)

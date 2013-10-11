@@ -84,7 +84,40 @@ void Periodical::Return (void)
 
 void Periodical::ReadIn (istream & input)
 {
+    for (string value; input.good(); input >> value) {
 
+        if (value == "Name:") {
+            Name = input.getline();
+        } else if (value == "ID:") {
+            input >> ID;
+        } else if (value == "Asset_Type:") {
+            string type;
+            input >> type;
+            Asset::SetType(type);
+        } else if (value == "Author:") {
+            Author = input.getline();
+        } else if (value == "ISSN") {
+            input >> ISSN;
+        } else if (value == "Issues") {
+	    int issues;
+	    input >> issues;
+	    for (int i; i < issues; i++) {
+	      Issue issue;
+	      for (value; input.good(); input >> value) {
+		if (value == "Volume:")
+		  input >> issue.Volume;
+		else if (value == "Number:")
+		  input >> issue.Number;
+		else if (value == "Publication_Date:")
+		  input >> PubDate;
+		else if (value == "Checked_Out_On:")
+		  input >> CheckedOut;
+	      }
+	    }
+	    Issues.push_back(issue);
+	    return;
+	}
+    }
 }
 
 void Periodical::WriteOut (ostream & output)
