@@ -53,7 +53,6 @@ class Book : public Asset
 	string Author;
 	string ISBN;
 	BookType Type;
-	int CopyNumber;
 	Date CheckedOut;
 	Member * CheckedOutBy;
 };
