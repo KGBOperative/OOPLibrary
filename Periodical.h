@@ -58,7 +58,6 @@ class Periodical : public Asset
             Date PubDate;
             Date CheckedOut;
             Member * CheckedOutBy;
-            int CopyNumber;
         };
 
         PeriodicalType Type;
