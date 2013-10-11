@@ -9,7 +9,6 @@
 #include <iostream>
 #include "Asset.h"
 #include "Date.h"
-#include "Member.h"
 
 using namespace std;
 
@@ -38,7 +37,7 @@ class Book : public Asset
 
 	// This function sets CheckedOut to the current date and designates
 	// the passed member as having checked out the Book.
-	void CheckOut (Member * member);
+	void CheckOut (Library * member);
 
 	// This function designates the Book object as being checked in.
 	void Return ();
@@ -54,7 +53,7 @@ class Book : public Asset
 	string ISBN;
 	BookType Type;
 	Date CheckedOut;
-	Member * CheckedOutBy;
+	Library * CheckedOutBy;
 };
 
 #endif

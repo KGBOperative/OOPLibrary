@@ -48,7 +48,7 @@ LibType Book::IsA () const
     return BOOK;
 }
 
-void Book::CheckOut (Member * member)
+void Book::CheckOut (Library * member)
 {
     time_t t = time(0);
     struct tm * now = localtime (&t);

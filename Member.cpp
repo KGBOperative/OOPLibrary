@@ -3,7 +3,6 @@
 // Contents: This file contains the implementation of the Member class
 
 #include "Member.h"
-#include "Asset.h"
 
 Member::Member(void) {
     Type = MEMBER;
@@ -43,7 +42,7 @@ LibType Member::IsA(void) const {
     return MEMBER;
 }
 
-void Member::CheckOut(Asset *asset) {
+void Member::CheckOut(Member *asset) {
     checkedOut.push_back(asset);
     asset->CheckOut(this);
 }

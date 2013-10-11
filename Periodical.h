@@ -37,7 +37,7 @@ class Periodical : public Asset
 
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
-        void CheckOut (Member * member);
+        void CheckOut (Library * member);
 
         // This function designates the Periodical object as being checked in.
         void Return (void);
@@ -57,7 +57,7 @@ class Periodical : public Asset
             int Number;
             Date PubDate;
             Date CheckedOut;
-            Member * CheckedOutBy;
+            Library * CheckedOutBy;
         };
 
         PeriodicalType Type;

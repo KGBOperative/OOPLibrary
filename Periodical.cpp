@@ -38,7 +38,7 @@ LibType Periodical::IsA (void) const
     return PERIODICAL;
 }
 
-void Periodical::CheckOut (Member * member)
+void Periodical::CheckOut (Library * member)
 {
     int i = 0;
     while (Issues[i].CheckedOutBy != NULL)

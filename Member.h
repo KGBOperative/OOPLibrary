@@ -35,7 +35,7 @@ cleass Member: public Library
         
         // This function adds the given Asset to the list off checked-out Assets
         // additionally, marks the Asset as checked out according to the Asset
-        void CheckOut (Asset *asset);
+        void CheckOut (Library *asset);
         
         // Checks in the Asset that matches assetID
         void Return (string assetID);
@@ -47,7 +47,7 @@ cleass Member: public Library
         void WriteOut (ostream & output);
 
     private:
-        vector <Asset *> checkedOut;
+        vector <Library *> checkedOut;
         string address, city, state, zip;
         string phone;
 };
