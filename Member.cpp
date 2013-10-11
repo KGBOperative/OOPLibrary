@@ -38,16 +38,10 @@ Member &Member::operator=(const Member &m) {
     checkedOut = m.checkedOut;
 }
 
-void Member::CheckOut(Library *L) {
-    checkedOut.push_back(L);
-    L->CheckOut(this);
+void Member::Add(Library *asset, Date date) {
+    CheckedOut.push_back(asset);
 }
 
-void Member::Return(Library *L) {
-    for (int i; i < checkedOut.size(); i++)
-        if (checkedOut[i] == L) {
-	    checkedOut[i]->Return();
-	    checkedOut.erase(i);
-      }
+void Member::Remove(Library *asset) {
+    // check if asset exists in the vector and remove it
 }
-

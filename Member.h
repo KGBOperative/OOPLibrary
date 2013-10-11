@@ -30,13 +30,6 @@ cleass Member: public Library
         // This assignment operator will copy one object to another of the same type.
         Member & operator = (const Member & m);
         
-        // This function adds the given Asset to the list off checked-out Assets
-        // additionally, marks the Asset as checked out according to the Asset
-        void CheckOut (Library *asset);
-        
-        // Checks in the Asset that matches assetID
-        void Return (string assetID);
-        
         // Reads in the state of the current Member from the record file
         void ReadIn (istream & input);
         
@@ -44,6 +37,12 @@ cleass Member: public Library
         void WriteOut (ostream & output);
 
     private:
+        // Adds the asset given into the list of checked out items
+        void Add(Library *asset, Date, date);
+
+        // Removes the asset given from the list of checked out items
+        void Remove(Library *asset);
+
         vector <Library *> checkedOut;
         string address, city, state, zip;
         string phone;
