@@ -34,6 +34,9 @@ class Periodical : public Asset
 
         // The IsA function will return the appropriate LibType.
         LibType IsA (void) const;
+	
+	// This function sets Type based on a string value.
+	void SetType (string TypeS);
 
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
