@@ -90,8 +90,23 @@ void loadLib(lib & L)
 		return;
 	}
 	
+	while (libFile.good())
+	{
+	    string Type;
+	    libFile >> Type;
+	    if (Type == "Type:") {
+	        libFile >> Type;
+	        if (Type == "MEMBER") {
 
+	        } else if (Type == "BOOK") {
 
+	        } else if (Type == "PERIODICAL") {
+
+	        } else {
+	            // Not a valid type
+	        }
+	    }
+	}
 }
 
 void saveLib(lib & L)
