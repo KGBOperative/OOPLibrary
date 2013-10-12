@@ -18,11 +18,11 @@ class Asset : public Library
         // Enumerated type for Asset Classification
         enum AssetType {SHORT, LITERARY, MYSTERY, SCIFI, SELFHELP, BIOGRAPHY, COOKING, SPORTS};
 
-	// This function sets Type based on a sring value.
-	virtual void SetType (string TypeS);
+        // This function sets Type based on a sring value.
+        virtual void SetType (string TypeS);
 
-	// This function returs Type as a string.
-	virtual string GetType () const;
+        // This function returs Type as a string.
+        virtual string GetType () const;
 
         // Default constructor
         Asset(void);

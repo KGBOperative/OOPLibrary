@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "Asset.h"
 #include "Date.h"
 
@@ -23,27 +24,27 @@ class Periodical : public Asset
 
         // This copy constructor will create a new Periodical object identical to the
         // passed Periodical object.
-        Periodical (const Periodical & P);
+        Periodical (const shared_ptr<Periodical> P);
 
         // This destructor currently does nothing.
         ~Periodical (void);
 
         // This assignment operator will copy the values of one Periodical object
         // to another.
-        Periodical & operator = (const Periodical & P);
+        shared_ptr<Periodical> operator = (const shared_ptr<Periodical> P);
 
         // The IsA function will return the appropriate LibType.
         LibType IsA (void) const;
 	
-	// This function sets Type based on a string value.
-	void SetType (string TypeS);
+        // This function sets Type based on a string value.
+        void SetType (string TypeS);
 
-	// This function returns Type as a string.
-	void GetString () const;
+        // This function returns Type as a string.
+        void GetString () const;
 
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
-        void CheckOut (Library * member);
+        void CheckOut (shared_ptr<Library> member);
 
         // This function designates the Periodical object as being checked in.
         void Return (void);
@@ -63,7 +64,7 @@ class Periodical : public Asset
             int Number;
             Date PubDate;
             Date CheckedOut;
-            Library * CheckedOutBy;
+            shared_ptr<Library> CheckedOutBy;
         };
 
         PeriodicalType Type;

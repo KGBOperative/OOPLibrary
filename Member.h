@@ -9,8 +9,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 #include "Library.h"
-#include "Asset.h"
 
 using namespace std;
 
@@ -22,13 +22,13 @@ cleass Member: public Library
 
         // This constructor will create a new member object identical to the passed member
         // object.
-        Member (const Member & m);
+        Member (const shared_ptr<Member> m);
         
         // This destructor currently does nothing.
         ~Member ();
         
         // This assignment operator will copy one object to another of the same type.
-        Member & operator = (const Member & m);
+        shared_ptr<Member> operator = (const shared_ptr<Member> m);
         
         // Reads in the state of the current Member from the record file
         void ReadIn (istream & input);
@@ -38,12 +38,12 @@ cleass Member: public Library
 
     private:
         // Adds the asset given into the list of checked out items
-        void Add(Library *asset, Date, date);
+        void Add(shared_ptr<Library> asset, Date, date);
 
         // Removes the asset given from the list of checked out items
-        void Remove(Library *asset);
+        void Remove(shared_ptr<Library> asset);
 
-        vector <Library *> checkedOut;
+        vector <shared_ptr<Library> > checkedOut;
         string address, city, state, zip;
         string phone;
 };

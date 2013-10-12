@@ -1,64 +1,82 @@
 // file: P1app.cpp
-// Authors: Marshall Jankovsky, 
+// Authors: Amandeep Gill, Marshall Jankovsky, 
+// Contents: This file contains the driver application for the library class
 
 #include <iostream>
 #include <vector> 
 #include <fstream>
+#include <memory>
 #include "Library.h"
 #include "Date.h"
 
 using namespace std;
 
-// container to hold the assets and members of a library.
-struct lib
-{
-	vector<Asset> assets;
-	vector<Member> members;
-};
+// Function Prototypes
 
-// Prototypes
+// function to display menu options and grab user menu selection
 char mainMenu ();
-void loadLib (lib & L);
-void saveLib (lib & L);
-void addMember (lib & L);
-void removeMember (lib & L);
-void addAsset (lib & L);
-void removeAsset (lib & L);
-void memCheckout (lib & L);
-void memReturn (lib & L);
-void makeReport(lib & L const);
+// function to load the library from the backup file specified by the user
+void loadLib (vector<shared_ptr<Library> > &L);
+// function to write the library to a backup file specified by the user
+void saveLib (vector<shared_ptr<Library> > &L);
+// function to allow the user to add a member to the library manually
+void addMember (vector<shared_ptr<Library> > &L);
+// function to allow the user to manually remove a member fro the library
+void removeMember (vector<shared_ptr<Library> > &L);
+// function to allow the user to manually add an asset, (book or periodical)
+void addAsset (vector<shared_ptr<Library> > &L);
+// function to allow the user to manually remove an asset from the library
+void removeAsset (vector<shared_ptr<Library> > &L);
+// function to check out an asset to a member
+void memCheckout (vector<shared_ptr<Library> > &L);
+// function currently does not do anything
+void memReturn (vector<shared_ptr<Library> > &L);
+// function to create a report from the given library
+void makeReport(vector<shared_ptr<Library> > &L const);
 
 int main()
 {
-	// initialize our library
-	lib L;
-	char choice = NULL;
-	while (choice != 'q')
-	{
-		choice = mainMenu();
-		if (choice == 'a') 
-			loadLib(lib L);
-		else if (choice == 'b') 
-			saveLib(L);
-		else if (choice == 'c') 
-			addMember(L);	
-		else if (choice == 'd')
-			removeMember(L);
-		else if (choice == 'e')
-			addAsset(L);
-		else if (choice == 'f')
-			removeAsset(L);
-		else if (choice == 'g')
-			memCheckout(L);
-		else if (choice == 'h')
-			memReturn(L);
-		else if (choice == 'i')
-			makeReport(L);
-		else if (choice != 'q')
-			cout << "Invalid choice\n";
-		cout << endl;
-	}
-	return 0;			
+    // initialize our library
+    vector<shared_ptr<Library> > L;
+    char choice;
+    do {
+        choice = mainMenu();
+        switch(choice) {
+            case '1':
+                loadLib(L);
+                break;
+            case '2': 
+                saveLib(L);
+                break;
+            case '3': 
+                addMember(L);	
+                break;
+            case '4':
+                removeMember(L);
+                break;
+            case '5':
+                addAsset(L);
+                break;
+            case '6':
+                removeAsset(L);
+                break;
+            case '7':
+                memCheckout(L);
+                break;
+            case '8':
+                memReturn(L);
+                break;
+            case '9':
+                makeReport(L);
+                break;
+            case 'q':
+                break;
+            default:
+                cout << "Invalid choice\n";
+        }
+        cout << endl;
+    } while (choice != 'q')
+    return 0;			
 }
 
 char mainMenu()
@@ -78,7 +96,7 @@ char mainMenu()
 	return tolower(char);
 }
 
-void loadLib(lib & L)
+void loadLib(vector<shared_ptr<Library> > &L)
 {
 	string fname;
 	cout << "Enter the filename of the library to load:\n";
@@ -109,10 +127,10 @@ void loadLib(lib & L)
 	}
 }
 
-void saveLib(lib & L)
+void saveLib(vector<shared_ptr<Library> > &L)
 {return;}
 
-void addMember(lib & L)
+void addMember(vector<shared_ptr<Library> > &L)
 {
 	string name; string id; string address; string city; string state; 
 	string zip; string phone;
@@ -136,7 +154,7 @@ void addMember(lib & L)
 	return;
 }
 
-void removeMember(lib & L)
+void removeMember(vector<shared_ptr<Library> > &L)
 {
 	string targId;
 	cout << "Delete current memeber:\nID of member you wish to erase: ";
@@ -148,7 +166,7 @@ void removeMember(lib & L)
 }
 
 }
-void addAsset(lib & L)
+void addAsset(vector<shared_ptr<Library> > &L)
 {
 	char choice;
 	bool isval = false; 
@@ -220,25 +238,25 @@ void memCheckout()
 void memReturn()
 {return;}
 
-void makeReport(lib & L const)
+void makeReport(vector<shared_ptr<Library> > &L const)
 {
-	char choice = NULL; 
-	while (choice != 'q')
-	{
-		cout << "Report Menu:\na) List overdue Assets\n";
-		cout << "b) List members with overdue Assets\n";
-		cout << "c) List members in a specified area code\nq) Quit\n";
-		cin >> choice; 
-		tolower(choice);
-		if (choice == 'a')
-			return; 
-		else if (choice == 'b')
-			return;
-		else if (choice == 'c')
-			return;
-		else if (choice != 'q')
-			cout << "Invalid choice\n";
-	}
+    char choice = NULL; 
+    while (choice != 'q') {
+        cout << "Report Menu:\na) List overdue Assets\n";
+        cout << "b) List members with overdue Assets\n";
+        cout << "c) List members in a specified area code\nq) Quit\n";
+
+        cin >> choice; 
+        tolower(choice);
+
+        switch (choice) {
+            case 'a':
+            case 'b':
+            case 'c':
+            case 'q':
+                return;
+            default:
+                cout << "Invalid choice\n";
+        }
+    }
 }
-
-

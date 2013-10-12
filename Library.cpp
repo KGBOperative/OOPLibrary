@@ -11,19 +11,19 @@ Library::Library ()
     Type = LIBRARY;
 }
 
-Library::Library (const Library & S);
+Library::Library (const shared_ptr<library> S);
 {
-    Type = S.Type;
-    Name = S.Name;
-    ID = S.ID;
+    Type = S->Type;
+    Name = S->Name;
+    ID = S->ID;
 }
 
 
-Library & Library::operator = (const Library & S);
+shared_ptr<library> Library::operator = (const shared_ptr<library> S);
 {
-    Type = S.Type;
-    Name = S.Name;
-    ID = S.ID;
+    Type = S->Type;
+    Name = S->Name;
+    ID = S->ID;
 }
 
 
@@ -33,16 +33,16 @@ virtual LibType Library::IsA () const;
 }
 
 
-friend istream & operator >> (istream & ins, const Library & S);
+friend istream & operator >> (istream & ins, const shared_ptr<library> S);
 {
-    S.ReadIn(ins);
+    S->ReadIn(ins);
     return ins;
 }
 
 
-friend ostream & operator << (ostream & outs, const Library & S);
+friend ostream & operator << (ostream & outs, const shared_ptr<library> S);
 {
-    S.WriteOut(outs);
+    S->WriteOut(outs);
     return outs;
 }
 
@@ -72,14 +72,14 @@ virtual string Library::GetType () const
     }
 }
 
-void Library::CheckOut (Library *member, Library *asset, Date date);
+void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date);
 {
     member->Add(asset, date);
     asset->Add(member, date);
 }
 
 
-virtual void Library::Return (Library *member, Library *asset);
+virtual void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset);
 {
     member->Remove(asset);
     asset->Remove(member);
@@ -98,11 +98,11 @@ virtual void Library::WriteOut (ostream & output);
     output << "ID: "   << ID   << endl;
 }
 
-bool Library::operator==(const Library *lib1, const Library *lib2) {
+bool Library::operator==(const shared_ptr<Library>lib1, const shared_ptr<Library>lib2) {
     return lib1->ID == lib2->ID;
 }
 
-bool Library::operator<(const Library *lib1, const Library *lib2) {
+bool Library::operator<(const shared_ptr<Library>lib1, const shared_ptr<Library>lib2) {
     return lib1->ID < lib2->ID;
 }
 

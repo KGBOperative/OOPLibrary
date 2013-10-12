@@ -16,32 +16,32 @@ Member::Member(void) {
     ID = "";
 }
 
-Member::Member(const Member &m) {
-    address = m.address;
-    city = m.city;
-    state = m.state;
-    zip = m.zip;
-    phone = m.phone;
-    Name = m.Name;
-    ID = m.ID;
-    checkedOut = m.checkedOut;
+Member::Member(const shared_ptr<Member> m) {
+    address = m->address;
+    city = m->city;
+    state = m->state;
+    zip = m->zip;
+    phone = m->phone;
+    Name = m->Name;
+    ID = m->ID;
+    checkedOut = m->checkedOut;
 }
 
-Member &Member::operator=(const Member &m) {
-    address = m.address;
-    city = m.city;
-    state = m.state;
-    zip = m.zip;
-    phone = m.phone;
-    Name = m.Name;
-    ID = m.ID;
-    checkedOut = m.checkedOut;
+shared_ptr<Member> Member::operator=(const shared_ptr<Member> m) {
+    address = m->address;
+    city = m->city;
+    state = m->state;
+    zip = m->zip;
+    phone = m->phone;
+    Name = m->Name;
+    ID = m->ID;
+    checkedOut = m->checkedOut;
 }
 
-void Member::Add(Library *asset, Date date) {
-    CheckedOut.push_back(asset);
+void Member::Add(shared_ptr<Library> asset, Date date) {
+    CheckedOut->push_back(asset);
 }
 
-void Member::Remove(Library *asset) {
+void Member::Remove(shared_ptr<Library> asset) {
     // check if asset exists in the vector and remove it
 }

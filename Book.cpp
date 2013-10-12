@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <ctime>
-#include "Library.h"
 #include "Asset.h"
 #include "Book.h"
 
@@ -19,28 +18,28 @@ Book::Book ()
     CheckedOutBy = NULL;
 }
 
-Book::Book (const Book & B)
+Book::Book (const shared_ptr<Book> B)
 {
     Library::Type = BOOK;
-    Asset::Type = B.Asset::Type;
-    Type = B.Type;
-    Author = B.Author;
-    ISBN = B.ISBN;
-    CopyNumber = B.CopyNumber;
-    CheckedOut = B.CheckedOut;
-    CheckedOutBy = B.CheckedOutBy;
+    Asset::Type = B->Asset::Type;
+    Type = B->Type;
+    Author = B->Author;
+    ISBN = B->ISBN;
+    CopyNumber = B->CopyNumber;
+    CheckedOut = B->CheckedOut;
+    CheckedOutBy = B->CheckedOutBy;
 }
 
-Book & Book::operator = (const Book & B)
+shared_ptr<Book> Book::operator = (const shared_ptr<Book> B)
 {
     Library::Type = BOOK;
-    Asset::Type = B.Asset::Type;
-    Type = B.Type;
-    Author = B.Author;
-    ISBN = B.ISBN;
-    CopyNumber = B.CopyNumber;
-    CheckedOut = B.CheckedOut;
-    CheckedOutBy = B.CheckedOutBy;
+    Asset::Type = B->Asset::Type;
+    Type = B->Type;
+    Author = B->Author;
+    ISBN = B->ISBN;
+    CopyNumber = B->CopyNumber;
+    CheckedOut = B->CheckedOut;
+    CheckedOutBy = B->CheckedOutBy;
 }
 
 LibType Book::IsA () const
@@ -50,15 +49,19 @@ LibType Book::IsA () const
 
 void Book::SetType (string TypeS)
 {
-    switch (TypeS)
-    {
-        case "FICTION": Type = FICTION; break;
-        case "NONFICTION": Type = NONFICTION; break;
-        default: cout << "Not a valid Type" << endl;
-    }
+    if (TypeS == "FICTION") 
+        Type = FICTION;
+
+    else if("NONFICTION") 
+        Type = NONFICTION;
+
+/* Not sure if this line is necessary --Aman
+    else
+         cout << "Not a valid Type" << endl;
+*/
 }
 
-string Book::SetType () const
+string Book::GetType () const
 {
     switch (Type)
     {
@@ -68,12 +71,12 @@ string Book::SetType () const
     }
 }
 
-void Book::CheckOut (Library * member)
+void Book::CheckOut (shared_ptr<Library> member)
 {
     time_t t = time(0);
-    struct tm * now = localtime (&t);
+    unique_ptr<struct tm> now(localtime (&t));
     CheckedOut = Date (now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
-    CheckedOutBy = L;
+    CheckedOutBy = member;
 }
 
 void Book::Return ()
@@ -85,27 +88,35 @@ void Book::Return ()
 void Book::ReadIn (istream & input)
 {
     for (string value; input.good(); input >> value) {
-    
-        if (value == "Name:") {
-	    Name = input.getline();
-	} else if (value == "ID:") {
-	    input >> ID;
-	} else if (value == "Asset_Type:") {
-	    string type;
-	    input >> type;
-	    Asset::SetType(type);
-	} else if (value == "Author:") {
-	    Author = input.getline();
-	} else if (value == "ISBN") {
-	    input >> ISBN;
-	} else if (value == "Type:") {
-	    string type;
-	    input >> type;
-	    SetType(type);
-	} else if (value == "Checked_Out_On") {
-	  input >> CheckedOut;
-	  return;
-	}
+
+        if (value == "Name:") 
+            Name = input.getline();
+
+        else if (value == "ID:") 
+            input >> ID;
+
+        else if (value == "Asset_Type:") {
+            string type;
+            input >> type;
+            Asset::SetType(type);
+        } 
+        
+        else if (value == "Author:")
+            Author = input.getline();
+
+        else if (value == "ISBN") 
+            input >> ISBN;
+
+        else if (value == "Type:") {
+            string type;
+            input >> type;
+            SetType(type);
+        } 
+        
+        else if (value == "Checked_Out_On") {
+            input >> CheckedOut;
+            return;
+        }
     }
 }
 
