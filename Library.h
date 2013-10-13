@@ -9,6 +9,8 @@
 #include <iostream>
 #include <memory>
 
+#include "Date.h"
+
 #define DEBUG 0
 #define debug if (DEBUG) cout
 
@@ -60,11 +62,17 @@ class Library
         // This function returns the asset from the member given
         static void Return (shared_ptr<Library> member, shared_ptr<Library> asset);
 
+        // This function returns the object's ID
+        string GetID(void);
+
         // overloaded equality operator for Library pointers
-        bool operator==(const shared_ptr<Library> lib1, const shared_ptr<Library> lib2);
+        bool operator==(const shared_ptr<Library> lib);
+
+        // overloaded equality operator for comparing Library pointers to ID strings
+        bool operator==(const string &id);
 
         // overloaded lessthan operator for Library pointers
-        bool operator<(const shared_ptr<Library> lib1, const shared_ptr<Library> lib2);
+        bool operator<(const shared_ptr<Library> lib2);
        
     protected:
         // This function is called by the static function CheckOut
@@ -82,6 +90,7 @@ class Library
         LibType Type;
         string Name;
         string ID;
+
     private:
 };
 

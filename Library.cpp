@@ -6,61 +6,63 @@
 #include "Library.h"
 using namespace std;
 
-Library::Library ()
-{
+Library::Library () {
     Type = LIBRARY;
 }
 
-Library::Library (const shared_ptr<library> S);
-{
+Library::Library (const shared_ptr<Library> S) {
     Type = S->Type;
     Name = S->Name;
     ID = S->ID;
 }
 
 
-shared_ptr<library> Library::operator = (const shared_ptr<library> S);
-{
+shared_ptr<Library> Library::operator = (const shared_ptr<Library> S) {
     Type = S->Type;
     Name = S->Name;
     ID = S->ID;
+
+    return shared_ptr<Library>(this);
 }
 
 
-virtual LibType Library::IsA () const;
-{
+Library::LibType Library::IsA () const {
     return Type;
 }
 
 
-friend istream & operator >> (istream & ins, const shared_ptr<library> S);
-{
+istream & operator >> (istream & ins, const shared_ptr<Library> S) {
     S->ReadIn(ins);
     return ins;
 }
 
 
-friend ostream & operator << (ostream & outs, const shared_ptr<library> S);
-{
+ostream & operator << (ostream & outs, const shared_ptr<Library> S) {
     S->WriteOut(outs);
     return outs;
 }
 
-virtual void Library::SetType (string TypeS)
-{
-    switch (TypeS)
-    {
-        case "LIBRARY": Type = LIBRARY; break;
-        case "MEMBER": Type = MEMBER; break;
-        case "ASSET": Type = ASSET; break;
-        case "BOOK": Type = BOOK; break;
-        case "PERIODICAL": Type = PERIODICAL; break;
-        default: cout << "Not a valid LibType" << endl;
-    }
+void Library::SetType (string TypeS) {
+    if (TypeS == "LIBRARY") 
+        Type = LIBRARY;
+
+    else if (TypeS == "MEMBER") 
+        Type = MEMBER;
+    
+    else if (TypeS == "ASSET") 
+        Type = ASSET;
+    
+    else if (TypeS == "BOOK") 
+        Type = BOOK;
+    
+    else if (TypeS == "PERIODICAL") 
+        Type = PERIODICAL;
+    
+    else 
+        cout << "Not a valid LibType" << endl;
 }
 
-virtual string Library::GetType () const
-{
+string Library::GetType () const {
     switch (Type)
     {
         case LIBRARY: return "LIBRARY";
@@ -72,37 +74,41 @@ virtual string Library::GetType () const
     }
 }
 
-void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date);
-{
+void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date) {
     member->Add(asset, date);
     asset->Add(member, date);
 }
 
 
-virtual void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset);
-{
+void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset) {
     member->Remove(asset);
     asset->Remove(member);
 }
 
 
-virtual void Library::ReadIn (istream & input);
-{
+void Library::ReadIn (istream & input) {
 }
 
 
-virtual void Library::WriteOut (ostream & output);
-{
+void Library::WriteOut (ostream & output) {
     output << "Type: LIBRARY" << endl;
     output << "Name: " << Name << endl;
     output << "ID: "   << ID   << endl;
 }
 
-bool Library::operator==(const shared_ptr<Library>lib1, const shared_ptr<Library>lib2) {
-    return lib1->ID == lib2->ID;
+string Library::GetID(void) {
+    return ID;
 }
 
-bool Library::operator<(const shared_ptr<Library>lib1, const shared_ptr<Library>lib2) {
-    return lib1->ID < lib2->ID;
+bool Library::operator==(const shared_ptr<Library> lib) {
+    return ID == lib->ID;
+}
+
+bool Library::operator==(const string &id) {
+    return ID == id;
+}
+
+bool Library::operator<(const shared_ptr<Library> lib) {
+    return ID < lib->ID;
 }
 

@@ -68,7 +68,7 @@ class Periodical : public Asset
         };
 
         PeriodicalType Type;
-        String ISSN;
+        string ISSN;
         vector <Issue> Issues;
 };
 

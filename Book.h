@@ -24,14 +24,14 @@ class Book : public Asset
 
         // This copy constructor will create a new Book object identical to the
         // passed Book object.
-        Book (const shared_ptr<Book> B);
+        Book (const Book &B);
 
         // This destructor currently does nothing.
         ~Book ();
 
         // This assignment operator will copy the values of one Book object
         // to another.
-        shared_ptr<Book> operator = (const shared_ptr<Book> B);
+        shared_ptr<Library> operator = (const Book &B);
 
         // The IsA function will return the appropriate LibType.
         LibType IsA () const;

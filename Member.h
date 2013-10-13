@@ -14,7 +14,7 @@
 
 using namespace std;
 
-cleass Member: public Library
+class Member: public Library
 {
     public:
         // The default constructor creates a new member object.
@@ -38,7 +38,7 @@ cleass Member: public Library
 
     private:
         // Adds the asset given into the list of checked out items
-        void Add(shared_ptr<Library> asset, Date, date);
+        void Add(shared_ptr<Library> asset, Date date);
 
         // Removes the asset given from the list of checked out items
         void Remove(shared_ptr<Library> asset);
