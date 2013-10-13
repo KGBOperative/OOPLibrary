@@ -16,6 +16,38 @@ Book::Book () {
     CheckedOutBy = NULL;
 }
 
+Book::Book(string name, string id, string aType, string author, string isbn, string bType) {
+    Library::Type = BOOK;
+    Name = name;
+    ID = id;
+    
+    if (aType == "SHORT") 
+        Asset::Type = SHORT;
+    else if (aType == "LITERARY")
+        Asset::Type = LITERARY;
+    else if (aType == "MYSTERY") 
+        Asset::Type = MYSTERY;
+    else if (aType == "SCIFI")
+        Asset::Type = SCIFI;
+    else if (aType == "SELFHELP")
+        Asset::Type = SELFHELP;
+    else if (aType == "BIOGRAPHY")
+        Asset::Type = BIOGRAPHY;
+    else if (aType == "COOKING")
+        Asset::Type = COOKING;
+    else if (aType == "SPORTS")
+        Asset::Type = SPORTS;
+
+    Author = author;
+    ISBN = isbn;
+    Library::Type = BOOK;
+
+    if (bType == "FICTION")
+        Book::Type = FICTION;
+    else if (bType == "NONFICTION")
+        Book::Type = NONFICTION;
+}
+
 Book::Book (const Book &B) {
     Library::Type = BOOK;
     Asset::Type = B.Asset::Type;
@@ -36,32 +68,6 @@ shared_ptr<Library> Book::operator = (const Book &B) {
     CheckedOutBy = B.CheckedOutBy;
 
     return shared_ptr<Library>(this);
-}
-
-Library::LibType Book::IsA () const {
-    return BOOK;
-}
-
-void Book::SetType (string TypeS) {
-    if (TypeS == "FICTION") 
-        Type = FICTION;
-
-    else if("NONFICTION") 
-        Type = NONFICTION;
-
-/* Not sure if this line is necessary --Aman
-    else
-         cout << "Not a valid Type" << endl;
-*/
-}
-
-string Book::GetType () const {
-    switch (Type)
-    {
-        case FICTION: return "FICTION";
-        case NONFICTION: return "NONFICTION";
-        default: return "";
-    }
 }
 
 void Book::CheckOut (shared_ptr<Library> member) {

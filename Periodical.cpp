@@ -16,24 +16,46 @@ Periodical::Periodical (void)
     ISSN = "";
 }
 
-Periodical::Periodical (const shared_ptr<Periodical> P)
+Periodical::Periodical (string name, string id, string aType, string issn) {
+    Library::Type = PERIODICAL;
+    Name = name;
+    ID = id;
+
+    if (aType == "SHORT") 
+        Asset::Type = SHORT;
+    else if (aType == "LITERARY")
+        Asset::Type = LITERARY;
+    else if (aType == "MYSTERY") 
+        Asset::Type = MYSTERY;
+    else if (aType == "SCIFI")
+        Asset::Type = SCIFI;
+    else if (aType == "SELFHELP")
+        Asset::Type = SELFHELP;
+    else if (aType == "BIOGRAPHY")
+        Asset::Type = BIOGRAPHY;
+    else if (aType == "COOKING")
+        Asset::Type = COOKING;
+    else if (aType == "SPORTS")
+        Asset::Type = SPORTS;
+
+     ISSN = issn;
+}
+
+Periodical::Periodical (const Periodical & P)
 {
     Library::Type = PERIODICAL;
-    Type = P->Type;
-    ISSN = P->ISSN;
-    Issues = P->Issues;
+    Type = P.Type;
+    ISSN = P.ISSN;
+    Issues = P.Issues;
 }
 
-shared_ptr<Periodical> Periodical::operator = (const shared_ptr<Periodical> P)
+Periodical & Periodical::operator = (const Periodical & P)
 {
-    Type = P->Type;
-    ISSN = P->ISSN;
-    Issues = P->Issues;
-}
+    Type = P.Type;
+    ISSN = P.ISSN;
+    Issues = P.Issues;
 
-LibType Periodical::IsA (void) const
-{
-    return PERIODICAL;
+    return *this;
 }
 
 void Periodical::SetType (string TypeS)
@@ -50,7 +72,7 @@ void Periodical::SetType (string TypeS)
 */
 }
 
-string Periodical::GetType () const
+string Periodical::GetType (void) const
 {
     switch (Type)
     {
@@ -58,6 +80,15 @@ string Periodical::GetType () const
         case NONFICTION: return "NONFICTION";
         default: return "";
     }
+}
+
+void Periodical::AddIssue(int volume, int volNum, string pubDate) {
+    Issue issue;
+    issue.Volume = volume;
+    issue.Number = volNum;
+    issue.PubDate = pubDate;
+
+    Issues.push_back(issue);
 }
 
 void Periodical::CheckOut (shared_ptr<Library> member)
@@ -75,9 +106,9 @@ void Periodical::CheckOut (shared_ptr<Library> member)
 
 void Periodical::Return (void)
 {
-    for (int i = 0; i < Issues.size(); ++i) {
+    for (unsigned int i = 0; i < Issues.size(); ++i) {
         if (!Issues[i].CheckedOut.isNull()) {
-            Issues[i].CheckedOut.setNull();
+            Issues[i].CheckedOut.SetNull();
 
             if (Issues[i].CheckedOutBy != NULL)
                 Issues[i].CheckedOutBy = NULL;
@@ -90,7 +121,7 @@ void Periodical::ReadIn (istream & input)
     for (string value; input.good(); input >> value) {
 
         if (value == "Name:") 
-            Name = input.getline();
+            getline(input, Name);
         
         else if (value == "ID:") 
             input >> ID;
@@ -101,17 +132,14 @@ void Periodical::ReadIn (istream & input)
             Asset::SetType(type);
         } 
         
-        else if (value == "Author:") 
-            Author = input.getline();
-
         else if (value == "ISSN") 
             input >> ISSN;
 
         else if (value == "Issues") {
-            int issues;
-            input >> issues;
+            int numIssues;
+            input >> numIssues;
 
-            for (int i; i < issues; i++) {
+            for (int i; i < numIssues; i++) {
                 Issue issue;
 
                 for (value; input.good(); input >> value) {
@@ -123,14 +151,17 @@ void Periodical::ReadIn (istream & input)
                         input >> issue.Number;
                     
                     else if (value == "Publication_Date:")
-                        input >> PubDate;
+                        input >> issue.PubDate;
                     
-                    else if (value == "Checked_Out_On:")
-                        input >> CheckedOut;
+                    else if (value == "Checked_Out_On:") {
+                        input >> issue.CheckedOut;
+                        break;
+                    }
                 }
+
+                Issues.push_back(issue);
             }
                     
-            Issues.push_back(issue);
             return;
         }
     }
@@ -145,7 +176,7 @@ void Periodical::WriteOut (ostream & output)
     output << "ISSN: " << ISSN << endl;
     output << "Issues: " << Issues.size() << endl;
                     
-    for (int i = 0; i < Issues.size(); i++) {
+    for (unsigned int i = 0; i < Issues.size(); i++) {
         output << "Volume: " << Issues[i].Volume;
         output << "Number: " << Issues[i].Number << endl;
         output << "Publication_Date: " << Issues[i].PubDate << endl;
@@ -153,7 +184,7 @@ void Periodical::WriteOut (ostream & output)
         output << "Checked_Out_By: ";
                     
         if (Issues[i].CheckedOutBy != NULL)
-            output << Issues[i].CheckedOutBy->ID << endl;
+            output << Issues[i].CheckedOutBy->GetID() << endl;
                     
         else
             output << "None.\n";
@@ -162,6 +193,6 @@ void Periodical::WriteOut (ostream & output)
 
 Periodical::Issue::Issue(void)
 {
-    Volume = Number = CopyNumber = 0;
+    Volume = Number = 0;
     CheckedOutBy = NULL;
 }

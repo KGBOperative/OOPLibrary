@@ -16,32 +16,56 @@ Member::Member(void) {
     ID = "";
 }
 
-Member::Member(const shared_ptr<Member> m) {
-    address = m->address;
-    city = m->city;
-    state = m->state;
-    zip = m->zip;
-    phone = m->phone;
-    Name = m->Name;
-    ID = m->ID;
-    checkedOut = m->checkedOut;
+Member::Member (string name, string id, string address, string city, string state, string zip, string phone) {
+    this->Name = name;
+    this->ID = id;
+    this->address = address;
+    this->city = city;
+    this->state = state;
+    this->zip = zip;
+    this->phone = phone;
 }
 
-shared_ptr<Member> Member::operator=(const shared_ptr<Member> m) {
-    address = m->address;
-    city = m->city;
-    state = m->state;
-    zip = m->zip;
-    phone = m->phone;
-    Name = m->Name;
-    ID = m->ID;
-    checkedOut = m->checkedOut;
+Member::Member(const Member & m) {
+    address = m.address;
+    city = m.city;
+    state = m.state;
+    zip = m.zip;
+    phone = m.phone;
+    Name = m.Name;
+    ID = m.ID;
+    checkedOut = m.checkedOut;
+}
+
+Member & Member::operator=(const Member & m) {
+    address = m.address;
+    city = m.city;
+    state = m.state;
+    zip = m.zip;
+    phone = m.phone;
+    Name = m.Name;
+    ID = m.ID;
+    checkedOut = m.checkedOut;
+
+    return *this;
 }
 
 void Member::Add(shared_ptr<Library> asset, Date date) {
-    CheckedOut->push_back(asset);
+    checkedOut.push_back(asset);
 }
 
 void Member::Remove(shared_ptr<Library> asset) {
-    // check if asset exists in the vector and remove it
+    for (unsigned int i = 0; i < checkedOut.size(); ++i) {
+        if (checkedOut[i] == asset) {
+            checkedOut.erase(checkedOut.begin() + i);
+            return;
+        }
+    }
 }
+
+void Member::ReadIn(istream &input) {
+}
+
+void Member::WriteOut(ostream &output) {
+}
+

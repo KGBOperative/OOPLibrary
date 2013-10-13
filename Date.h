@@ -2,21 +2,27 @@
 #define DATE_H
 
 // File: Date.h
-// Author: Kyle Janssen
+// Authors: Amandeep Gill, Kyle Janssen
 // Contents: This file contains the description of a class called Date.
 
 #include <iostream>
+
+#include "DateConversion.h"
+
 using namespace std;
 
 class Date
 {
     public:
         // Default constructor for date
-        Date ();
+        Date (void);
 
         // This copy constructor will create a Date object identical to
         // the passed Date object.
         Date (const Date & D);
+
+        // This constructor will create a date object from the string given
+        Date (string date);
 
         // This constructor will create a Date oject with that reprisents
         // the date of the passed values.
@@ -26,8 +32,8 @@ class Date
         // to another.
         Date & operator = (const Date & D);
 
-        // This destructor currently does nothing.
-        ~Date ();
+        // This mutator function sets the date from the string given
+        void SetDate(string date);
 
         // This mutator function sets the month of the date to the passed value.
         void SetMonth (int inMonth);
@@ -39,19 +45,19 @@ class Date
         void SetYear (int inYear);
 
         // This accessor function returns the value of month.
-        int GetMonth () const;
+        int GetMonth (void) const;
 
         // This accessor function returns the value of day.
-        int GetDay () const;
+        int GetDay (void) const;
 
         // This accessor function returns the value of year.
-        int GetYear () const;
+        int GetYear (void) const;
 
         // This mutator function sets the date to a void date
-        void SetNull();
+        void SetNull(void);
 
         // This accessor function checks whether the date is void
-        bool isNull() const;
+        bool isNull(void) const;
 
         // This subtraction operator retuns the difference in days between the
         // caller and the passed object.

@@ -1,15 +1,34 @@
+#ifndef LIBRARYIO_CPP
+#define LIBRARY()_CPP
+
 // File: LibraryIO.cpp
 // Authors: Amandeep Gill, Marshall Jankovsky, Kyle Janssens
 // Contents: This file contains the implememntation of the functions defined in Menu.h
 
 #include "LibraryIO.h"
+/*
+#include <fstream>
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
+#include <iostream>
+#include <exception>
+
+#include "Library.h"
+#include "Book.h"
+#include "Periodical.h"
+#include "Member.h"
+*/
+
+using namespace std;
 
 void loadLib(vector<shared_ptr<Library> > &L)
 {
-    char *filename;
+    string filename;
     cout << "Enter the filename of the library to load:\n";
     cin >> filename; 
-    ifstream infile(filename);
+    ifstream infile(filename.c_str());
 
     if(infile.fail()) {
         cout << filename << " not found.\n";
@@ -43,18 +62,18 @@ void loadLib(vector<shared_ptr<Library> > &L)
 }
 
 void saveLib(vector<shared_ptr<Library> > &L) {
-    char* filename;
+    string filename;
     cout << "Enter file to write to: ";
     cin >> filename;
 
-    ostream outfile(filename);
+    ofstream outfile(filename.c_str());
 
-    for (int i = 0; i < L.size(); ++i)
+    for (unsigned int i = 0; i < L.size(); ++i)
         outfile << L[i];
 }
 
 void addMember(vector<shared_ptr<Library> > &L) {
-    string name, id, address, city, stat, zip, phone;
+    string name, id, address, city, state, zip, phone;
     cout << "Creating new member\n";
     cout << "Member Name: ";
     cin >> name;
@@ -76,15 +95,16 @@ void addMember(vector<shared_ptr<Library> > &L) {
     return;
 }
 
-void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const char*)  {
-    for (int i = 0; i < L.members.size(); ++i) {
-        if (L[i] == id) {
-            L[i]->erase(L.begin() + i);
+void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string)  {
+    for (unsigned int i = 0; i < L.size(); ++i) {
+        if (*L[i] == id) {
+            L.erase(L.begin() + i);
             return;
         }
     }
 
-    throw "ID: " + id " not found";
+    string err = "ID: " + id + " not found";
+    throw err;
 }
 
 void addAsset(vector<shared_ptr<Library> > &L) {
@@ -97,7 +117,6 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         cout << "type: ";
 
         cin >> choice; 
-        tolower(choice);
 
         if (choice != '1' && choice != '2')
             cout << "Invalid choice\n";
@@ -130,9 +149,8 @@ void addAsset(vector<shared_ptr<Library> > &L) {
 
     // Periodical 
     else {
-        string name, id, asType, issn;
+        string name, author, id, asType, issn, pubDate;
         int numIssues, volume, volNum; 
-        Date pubDate;  
 
         cout << "Creating new Periodical:\n";
         cout << "Periodical Title: ";
@@ -146,63 +164,74 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         cout << "Number of issues to store: ";
         cin >> numIssues;
 
+        shared_ptr<Library> newPeri(new Periodical(name, id, asType, issn));
+
         for (int i = 0; i < numIssues; ++i) {
             cout << "Volume: ";
             cin >> volume;
-            cout << "Number: "
+            cout << "Number: ";
             cin >> volNum;
-            cout << "Publication Date (MM/DD/YYYY): "
+            cout << "Publication Date (MM/DD/YYYY): ";
             cin >> pubDate;
-
-            shared_ptr<Library> newPeri(new Periodical(name, id, asType, issn, numIssues, volume, volNum, pubDate));
-            L.push_back(newPeri);
+            
+            newPeri->AddIssue(volume, volNum, pubDate);
         }
+
+        L.push_back(newPeri);
     }
 }
 
-void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const char*) {
+void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, string checkoutDate) throw(const string) {
     int member = -1;
     int asset = -1;
+    Date date(checkoutDate);
 
-    for (int i = 0; i < L.size() && (member < 0 || asset < 0); ++i) {
-        if (L[i] == memberID)
+    for (unsigned int i = 0; i < L.size() && (member < 0 || asset < 0); ++i) {
+        if (*L[i] == memberID)
             member = i;
-        else if (L[i] == assetID)
+        else if (*L[i] == assetID)
             asset = i;
     }
 
     if (member >= 0 && asset >= 0)
-        Library.CheckOut(L[member], L[asset]);
+        Library::CheckOut(L[member], L[asset], date);
 
-    else if (member == -1)
-        throw "member " + memberID + " not found";
+    else if (member == -1) {
+        string err = "member " + memberID + " not found";
+        throw err;
+    }
 
-    else
-        throw "asset " + assetID + " not found";
+    else {
+        string err = "asset " + assetID + " not found";
+        throw err;
+    }
 }
 
-void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const char*) {
+void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const string) {
     int member = -1;
     int asset = -1;
-    for (int i = 0; i < L.size() && (member < 0 || asset < 0); ++i) {
-        if (L[i] == memberID)
+    for (unsigned int i = 0; i < L.size() && (member < 0 || asset < 0); ++i) {
+        if (*L[i] == memberID)
             member = i;
-        else if (L[i] == assetID)
+        else if (*L[i] == assetID)
             asset = i;
     }
 
     if (member >= 0 && asset >= 0)
-        Library.Return(L[member], L[asset]);
+        Library::Return(L[member], L[asset]);
 
-    else if (member == -1)
-        throw "member " + memberID + " not found";
+    else if (member == -1) {
+        string err = "member " + memberID + " not found";
+        throw err;
+    }
 
-    else
-        throw "asset " + assetID + " not found";
+    else {
+        string err = "asset " + assetID + " not found";
+        throw err;
+    }
 }
 
-void makeReport(vector<shared_ptr<Library> > &L const)
-{
+void makeReport(const vector<shared_ptr<Library> > &L) {
     char choice; 
     do {
         cout << "Report Menu:\n";
@@ -220,9 +249,11 @@ void makeReport(vector<shared_ptr<Library> > &L const)
             case '2':
             case '3':
             case 'q':
-                return;
+                break;
             default:
                 cout << "Invalid choice\n";
         }
     } while (choice != 'q');
 }
+
+#endif

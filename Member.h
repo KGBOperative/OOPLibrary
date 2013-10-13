@@ -18,23 +18,26 @@ class Member: public Library
 {
     public:
         // The default constructor creates a new member object.
-        Member ();
+        Member (void);
+
+        // The overloaded constructor to set all informational data at once
+        Member (string name, string id, string address, string city, string state, string zip, string phone);
 
         // This constructor will create a new member object identical to the passed member
         // object.
-        Member (const shared_ptr<Member> m);
-        
-        // This destructor currently does nothing.
-        ~Member ();
+        Member (const Member & m);
         
         // This assignment operator will copy one object to another of the same type.
-        shared_ptr<Member> operator = (const shared_ptr<Member> m);
+        Member &  operator = (const Member & m);
         
         // Reads in the state of the current Member from the record file
         void ReadIn (istream & input);
         
         // Writes out the state of the Member to the record file
         void WriteOut (ostream & output);
+
+        // 
+        inline void AddIssue(int volume, int number, string pubDate) {}
 
     private:
         // Adds the asset given into the list of checked out items

@@ -22,16 +22,16 @@ class Periodical : public Asset
         // The default constructor creates a new Periodical object.
         Periodical (void);
 
+        // This overloaded constructor sets all the informational data at once
+        Periodical (string name, string id, string aType, string issn);
+
         // This copy constructor will create a new Periodical object identical to the
         // passed Periodical object.
-        Periodical (const shared_ptr<Periodical> P);
-
-        // This destructor currently does nothing.
-        ~Periodical (void);
+        Periodical (const Periodical & P);
 
         // This assignment operator will copy the values of one Periodical object
         // to another.
-        shared_ptr<Periodical> operator = (const shared_ptr<Periodical> P);
+        Periodical & operator = (const Periodical & P);
 
         // The IsA function will return the appropriate LibType.
         LibType IsA (void) const;
@@ -40,7 +40,10 @@ class Periodical : public Asset
         void SetType (string TypeS);
 
         // This function returns Type as a string.
-        void GetString () const;
+        string GetType(void) const;
+
+        // This function adds an issue to the periodical
+        void AddIssue(int volume, int volNum, string pubDate);
 
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
@@ -62,7 +65,7 @@ class Periodical : public Asset
             
             int Volume;
             int Number;
-            Date PubDate;
+            string PubDate;
             Date CheckedOut;
             shared_ptr<Library> CheckedOutBy;
         };

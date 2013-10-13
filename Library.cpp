@@ -1,5 +1,5 @@
 // File: Library.cpp
-// Author: Kyle Janssen
+// Author: Kyle Janssen, Amandeep Gill
 // Contents: This file contains the implementation of a class called Library.
 
 #include <iostream>
@@ -16,7 +16,6 @@ Library::Library (const shared_ptr<Library> S) {
     ID = S->ID;
 }
 
-
 shared_ptr<Library> Library::operator = (const shared_ptr<Library> S) {
     Type = S->Type;
     Name = S->Name;
@@ -24,7 +23,6 @@ shared_ptr<Library> Library::operator = (const shared_ptr<Library> S) {
 
     return shared_ptr<Library>(this);
 }
-
 
 Library::LibType Library::IsA () const {
     return Type;
@@ -85,6 +83,8 @@ void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset) {
     asset->Remove(member);
 }
 
+void Library::AddIssue(int volume, int number, string pubDate) {
+}
 
 void Library::ReadIn (istream & input) {
 }
@@ -100,12 +100,22 @@ string Library::GetID(void) {
     return ID;
 }
 
+void Library::Add(shared_ptr<Library> lib, Date dueDate) {
+}
+
+void Library::Remove(shared_ptr<Library> lib) {
+}
+
 bool Library::operator==(const shared_ptr<Library> lib) {
     return ID == lib->ID;
 }
 
 bool Library::operator==(const string &id) {
     return ID == id;
+}
+
+bool operator==(const shared_ptr<Library> lib, string id) {
+    return *lib == id;
 }
 
 bool Library::operator<(const shared_ptr<Library> lib) {

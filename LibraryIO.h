@@ -42,13 +42,13 @@ shared_ptr<Library> readPeriodical(istream &input);
 shared_ptr<Library> readBook(istream &input);
 
 // function to allow the user to manually remove an item from the library
-void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const char*);
+void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string);
 
 // function to check out an asset to a member
-void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const char*);
+void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, string date) throw(const string);
 
 // function currently does not do anything
-void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const char*);
+void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const string);
 
 // function to create a report from the given library
 void makeReport(const vector<shared_ptr<Library> > &L);

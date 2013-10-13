@@ -2,7 +2,7 @@
 #define LIBRARY_H
 
 // File: Library.h
-// Author:
+// Author: Amandeep Gill
 // Contents: This file contains the description of a virtual class
 // called Library.
 
@@ -23,20 +23,17 @@ class Library
         enum LibType {LIBRARY, MEMBER, ASSET, BOOK, PERIODICAL};
 
         // The default constructor creates a new library object.
-        Library ();
+        Library (void);
 
         // This constructor will create a new library object identical to the passed library
         // object.
         Library (const shared_ptr<Library> S);
 
-        // This destructor currently does nothing.
-        ~Library ();
-
         // This assignment operator will copy one object to another of the same type.
         shared_ptr<Library> operator = (const shared_ptr<Library> S);
 
         // The IsA function will return the appropriate LibType value.
-        virtual LibType IsA () const;
+        LibType IsA (void) const;
 
         // The input operator will call the ReadIn function for the passed library object.
         friend istream & operator >> (istream & outs, const shared_ptr<Library> S);
@@ -45,10 +42,13 @@ class Library
         friend ostream & operator << (ostream & outs, const shared_ptr<Library> S);
 
         // This function sets Type based on a string value.
-        virtual void SetType (string TypeS);
+        void SetType (string TypeS);
 
         // This function returns the Library Type as a string.
-        virtual string GetType () const;
+        string GetType (void) const;
+
+        // This function will only be implemented by Periodical
+        virtual void AddIssue(int volume, int number, string pubDate);
 
         // This function will be used by the child classes to read in object state data from a report file
         virtual void ReadIn (istream & input);

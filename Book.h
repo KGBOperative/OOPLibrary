@@ -20,34 +20,28 @@ class Book : public Asset
         enum BookType {FICTION, NONFICTION};
 
         // The default constructor creates a new Book object.
-        Book ();
+        Book (void);
+
+        // This overloaded constructor will set all informational data at once
+        Book(string name, string id, string aType, string author, string isbn, string bType);
 
         // This copy constructor will create a new Book object identical to the
         // passed Book object.
         Book (const Book &B);
 
-        // This destructor currently does nothing.
-        ~Book ();
-
         // This assignment operator will copy the values of one Book object
         // to another.
         shared_ptr<Library> operator = (const Book &B);
 
-        // The IsA function will return the appropriate LibType.
-        LibType IsA () const;
-
-        // This function sets Type based on a string value.
-        void SetType (string TypeS);
-
-        // This function returns Type as a string.
-        string GetType () const;
+        //
+        inline void AddIssue(int volume, int number, string pubDate) {}
 
         // This function sets CheckedOut to the current date and designates
         // the passed member as having checked out the Book.
         void CheckOut (shared_ptr<Library> member);
 
         // This function designates the Book object as being checked in.
-        void Return ();
+        void Return (void);
 
         // This function reads the state of the Book object from input.
         void ReadIn (istream & input);

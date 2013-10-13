@@ -1,7 +1,6 @@
 // File: DateConversion.cpp
-// Authors: Amandeep Gill
-// Contents: This file contains a function that converts the date into the
-// number of days using the Julian day conversion algorithm
+// Author: Amandeep Gill
+// Contents: the definition of the DateConversion function prototypes
 
 int julian_days(int year, int month, int day) {
     int a = (14 - month) / 12;
