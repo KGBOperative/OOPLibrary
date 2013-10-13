@@ -1,5 +1,5 @@
 // file: P1app.cpp
-// Authors: Amandeep Gill, Marshall Jankovsky, 
+// Authors: Amandeep Gill, Marshall Jankovsky, Kyle Janssen
 // Contents: This file contains the driver application for the library class
 
 #include "LibraryIO.h"
