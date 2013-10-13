@@ -18,7 +18,7 @@ class Member: public Library
 {
     public:
         // The default constructor creates a new member object.
-        Member (void);
+        Member ();
 
         // The overloaded constructor to set all informational data at once
         Member (string name, string id, string address, string city, string state, string zip, string phone);
@@ -38,6 +38,9 @@ class Member: public Library
 
         // 
         inline void AddIssue(int volume, int number, string pubDate) {}
+
+        // test for make
+        // inline void testing(void) {}
 
     private:
         // Adds the asset given into the list of checked out items

@@ -1,7 +1,7 @@
 CXX=g++
 LD=ld
-CFLAGS=-c -Wall -std=c++11 -MD
-LDFLAGS=
+CFLAGS=-c -Wall -std=c++11 -MMD
+LDFLAGS=-MMD
 
 MAIN=main.cpp
 SOURCES=Library.cpp Asset.cpp Book.cpp Periodical.cpp Member.cpp Date.cpp DateConversion.cpp LibraryIO.cpp $(MAIN) 
