@@ -39,9 +39,6 @@ class Member: public Library
         // 
         inline void AddIssue(int volume, int number, string pubDate) {}
 
-        // test for make
-        // inline void testing(void) {}
-
     private:
         // Adds the asset given into the list of checked out items
         void Add(shared_ptr<Library> asset, Date date);
