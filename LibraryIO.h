@@ -73,6 +73,11 @@ struct COAsset {
     int issueNum;
 };
 
+// function to sort a COAsset vector by the date
+inline bool sortByDate(const COAsset &lhs, const COAsset &rhs) {
+    return lhs.coDate < rhs.coDate;
+}
+
 // function to load the library from the backup file specified by the user
 void loadLib(vector<shared_ptr<Library> > &L) throw(const string);
 
@@ -113,5 +118,5 @@ void overdueAssetList(const vector<shared_ptr<Library> > &L);
 void overdueMemberList(const vector<shared_ptr<Library> > &L);
 
 // Creats a report of members in a specific area code
-void areaCodeList (const vector<shared_ptr<Libarary> > &L);
+void areaCodeList (const vector<shared_ptr<Library> > &L);
 #endif  // LIBRARYIO_H
