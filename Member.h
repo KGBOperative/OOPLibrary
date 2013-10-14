@@ -21,7 +21,7 @@ class Member: public Library
         Member ();
 
         // The overloaded constructor to set all informational data at once
-        Member (string name, string id, string address, string city, string state, string zip, string phone);
+        Member (string name, string id, string Address, string City, string State, string Zip, string Phone);
 
         // This constructor will create a new member object identical to the passed member object.
         Member (const Member & m);

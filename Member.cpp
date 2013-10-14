@@ -16,14 +16,15 @@ Member::Member(void) {
     ID = "";
 }
 
-Member::Member (string name, string id, string address, string city, string state, string zip, string phone) {
-    this->Name = name;
-    this->ID = id;
-    this->address = address;
-    this->city = city;
-    this->state = state;
-    this->zip = zip;
-    this->phone = phone;
+Member::Member (string name, string id, string Address, string City, string State, string Zip, string Phone) {
+    Type = MEMBER;
+    Name = name;
+    ID = id;
+    address = address;
+    city = city;
+    state = state;
+    zip = zip;
+    phone = phone;
 }
 
 Member::Member(const Member & m) {

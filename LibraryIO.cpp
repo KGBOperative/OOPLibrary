@@ -6,7 +6,7 @@
 // Contents: This file contains the implememntation of the functions defined in Menu.h
 
 #include "LibraryIO.h"
-
+#include <iostream>
 using namespace std;
 
 void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
@@ -158,21 +158,22 @@ void saveLib(vector<shared_ptr<Library> > &L) {
 
 void addMember(vector<shared_ptr<Library> > &L) {
     string name, id, address, city, state, zip, phone;
+    cin.ignore();
     cout << "Creating new member\n";
     cout << "Member Name: ";
-    cin >> name;
+    getline(cin, name);
     cout << "Member ID: ";
-    cin >> id;
+    getline(cin, id);
     cout << "Member Address: ";
-    cin >> address;
+    getline(cin, address);
     cout << "Member City: ";
-    cin >> city;
+    getline(cin, city);
     cout << "Member State: ";
-    cin >> state;
+    getline(cin, state);
     cout << "Member Zip: ";
-    cin >> zip;
+    getline(cin, zip);
     cout << "Member Phone #: ";
-    cin >> phone;
+    getline(cin, phone);
 
     shared_ptr<Library> newMem(new Member(name, id, address, city, state, zip, phone));
     L.push_back(newMem);
