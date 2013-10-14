@@ -21,10 +21,16 @@ Date::Date (const Date & D) {
 }
 
 Date::Date (string date) {
-    /*
-    stringstream ss(date);
-    ss >> month >> day >> year;
-    */
+    int slash1 = date.find("/");
+    int slash2 = date.rfind("/");
+
+    string mm = date.substr(0, slash1);
+    string dd = date.substr(slash1+1, slash2);
+    string yy = date.substr(slash2+1);
+
+    month = atoi(mm.c_str());
+    day = atoi(dd.c_str());
+    year = atoi(yy.c_str());
 }
 
 Date::Date (int inMonth, int inDay, int inYear) {

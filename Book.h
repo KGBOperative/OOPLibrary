@@ -33,8 +33,8 @@ class Book : public Asset
         // to another.
         shared_ptr<Library> operator = (const Book &B);
 
-        //
-        inline void AddIssue(int volume, int number, string pubDate) {}
+        // This sets the BookType that this Book belongs to
+        void SetType(string bType);
 
         // This function returns the checkOut date of the Book
         vector<Date> GetCheckoutDates(void) const;
@@ -44,6 +44,9 @@ class Book : public Asset
 
         // This function writes the state of the Book object to output.
         void WriteOut (ostream & output);
+
+        // ignored by book, not sure if this is necessary --Aman
+        inline void AddIssue(int volume, int number, string pubDate) {}
 
     private:
         // This function checks out the Book to the given Member on the given Date

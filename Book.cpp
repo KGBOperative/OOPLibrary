@@ -20,32 +20,10 @@ Book::Book(string name, string id, string aType, string author, string isbn, str
     Library::Type = BOOK;
     Name = name;
     ID = id;
-    
-    if (aType == "SHORT") 
-        Asset::Type = SHORT;
-    else if (aType == "LITERARY")
-        Asset::Type = LITERARY;
-    else if (aType == "MYSTERY") 
-        Asset::Type = MYSTERY;
-    else if (aType == "SCIFI")
-        Asset::Type = SCIFI;
-    else if (aType == "SELFHELP")
-        Asset::Type = SELFHELP;
-    else if (aType == "BIOGRAPHY")
-        Asset::Type = BIOGRAPHY;
-    else if (aType == "COOKING")
-        Asset::Type = COOKING;
-    else if (aType == "SPORTS")
-        Asset::Type = SPORTS;
-
+    Asset::SetType(aType);
     Author = author;
     ISBN = isbn;
-    Library::Type = BOOK;
 
-    if (bType == "FICTION")
-        Book::Type = FICTION;
-    else if (bType == "NONFICTION")
-        Book::Type = NONFICTION;
 }
 
 Book::Book (const Book &B) {
@@ -56,6 +34,13 @@ Book::Book (const Book &B) {
     ISBN = B.ISBN;
     CheckedOut = B.CheckedOut;
     CheckedOutBy = B.CheckedOutBy;
+}
+
+void Book::SetType(string bType) {
+    if (bType == "FICTION")
+        Book::Type = FICTION;
+    else if (bType == "NONFICTION")
+        Book::Type = NONFICTION;
 }
 
 shared_ptr<Library> Book::operator = (const Book &B) {
