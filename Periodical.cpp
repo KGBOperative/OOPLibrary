@@ -156,7 +156,7 @@ void Periodical::WriteOut (ostream & output)
     output << "Type: PERIODICAL" << endl;
     output << "Name: " << Name << endl;
     output << "ID: " << ID << endl;
-    output << "Asset_Type: " << endl;
+    output << "Asset_Type: " << Asset::GetType() << endl;
     output << "ISSN: " << ISSN << endl;
     output << "Issues: " << Issues.size() << endl;
                     
