@@ -82,6 +82,15 @@ string Periodical::GetType (void) const
     }
 }
 
+vector<Date> Periodical::GetCheckoutDates(void) const {
+    vector<Date> coDates;
+
+    for (unsigned int i = 0; i < Issues.size(); ++i)
+        coDates.push_back(Issues[i].CheckedOut);
+
+    return coDates;
+}
+
 void Periodical::AddIssue(int volume, int volNum, string pubDate) {
     Issue issue;
     issue.Volume = volume;
@@ -89,31 +98,6 @@ void Periodical::AddIssue(int volume, int volNum, string pubDate) {
     issue.PubDate = pubDate;
 
     Issues.push_back(issue);
-}
-
-void Periodical::CheckOut (shared_ptr<Library> member)
-{
-    int i = 0;
-    while (Issues[i].CheckedOutBy != NULL)
-      i++;
-
-    Issues[i].CheckedOutBy = member;
-
-    time_t t = time(0);
-    unique_ptr<struct tm> now(localtime (&t));
-    Issues[i].CheckedOut = Date (now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
-}
-
-void Periodical::Return (void)
-{
-    for (unsigned int i = 0; i < Issues.size(); ++i) {
-        if (!Issues[i].CheckedOut.isNull()) {
-            Issues[i].CheckedOut.SetNull();
-
-            if (Issues[i].CheckedOutBy != NULL)
-                Issues[i].CheckedOutBy = NULL;
-        }
-    }
 }
 
 void Periodical::ReadIn (istream & input)
@@ -189,6 +173,16 @@ void Periodical::WriteOut (ostream & output)
         else
             output << "None.\n";
     }
+}
+
+void Periodical::Add(shared_ptr<Library> member, Date checkedOutDate, int number) {
+    Issues[number].CheckedOut = checkedOutDate;
+    Issues[number].CheckedOutBy = member;
+}
+
+void Periodical::Remove(shared_ptr<Library> member, int number) {
+    Issues[number].CheckedOut.SetNull();
+    Issues[number].CheckedOutBy = NULL;
 }
 
 Periodical::Issue::Issue(void)

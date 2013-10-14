@@ -6,7 +6,7 @@
 #include "Library.h"
 using namespace std;
 
-Library::Library () {
+Library::Library (void) {
     Type = LIBRARY;
 }
 
@@ -24,7 +24,7 @@ shared_ptr<Library> Library::operator = (const shared_ptr<Library> S) {
     return shared_ptr<Library>(this);
 }
 
-Library::LibType Library::IsA () const {
+Library::LibType Library::IsA (void) const {
     return Type;
 }
 
@@ -60,7 +60,7 @@ void Library::SetType (string TypeS) {
         cout << "Not a valid LibType" << endl;
 }
 
-string Library::GetType () const {
+string Library::GetType (void) const {
     switch (Type)
     {
         case LIBRARY: return "LIBRARY";
@@ -72,15 +72,19 @@ string Library::GetType () const {
     }
 }
 
-void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date) {
-    member->Add(asset, date);
-    asset->Add(member, date);
+vector<Date> Library::GetCheckoutDates (void) const {
+    return vector<Date>();
+}
+
+void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date, int number) {
+    member->Add(asset, date, number);
+    asset->Add(member, date, number);
 }
 
 
-void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset) {
-    member->Remove(asset);
-    asset->Remove(member);
+void Library::Return (shared_ptr<Library>member, shared_ptr<Library>asset, int number) {
+    member->Remove(asset, number);
+    asset->Remove(member, number);
 }
 
 void Library::AddIssue(int volume, int number, string pubDate) {
@@ -100,10 +104,10 @@ string Library::GetID(void) {
     return ID;
 }
 
-void Library::Add(shared_ptr<Library> lib, Date dueDate) {
+void Library::Add(shared_ptr<Library> lib, Date dueDate, int number) {
 }
 
-void Library::Remove(shared_ptr<Library> lib) {
+void Library::Remove(shared_ptr<Library> lib, int number) {
 }
 
 bool Library::operator==(const shared_ptr<Library> lib) {

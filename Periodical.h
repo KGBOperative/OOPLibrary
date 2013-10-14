@@ -42,15 +42,11 @@ class Periodical : public Asset
         // This function returns Type as a string.
         string GetType(void) const;
 
+        // This function returns the checkout dates for all issues (00/00/00 if not checked out)
+        vector<Date> GetCheckoutDates(void) const;
+
         // This function adds an issue to the periodical
         void AddIssue(int volume, int volNum, string pubDate);
-
-        // This function sets CheckedOut to the current date and designates
-        // the passed member as having checked out the Book.
-        void CheckOut (shared_ptr<Library> member);
-
-        // This function designates the Periodical object as being checked in.
-        void Return (void);
 
         // This function reads the state of the Periodical object from input.
         void ReadIn (istream & input);
@@ -59,6 +55,13 @@ class Periodical : public Asset
         void WriteOut (ostream & output);
 
     private:
+        // This function sets the given issue to CheckedOut to the given member
+        void Add(shared_ptr<Library> member, Date checkoutDate, int number);
+
+        // This function returns the CheckedOut state of the given volume
+        void Remove(shared_ptr<Library> member, int number);
+
+        // This struct defines what an Issue is
         struct Issue {
             // default constructor for the Issue
             Issue(void);

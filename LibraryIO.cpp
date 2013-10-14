@@ -6,25 +6,10 @@
 // Contents: This file contains the implememntation of the functions defined in Menu.h
 
 #include "LibraryIO.h"
-/*
-#include <fstream>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
-#include <iostream>
-#include <exception>
-
-#include "Library.h"
-#include "Book.h"
-#include "Periodical.h"
-#include "Member.h"
-*/
 
 using namespace std;
 
-void loadLib(vector<shared_ptr<Library> > &L)
-{
+void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
     string filename;
     cout << "Enter the filename of the library to load:\n";
     cin >> filename; 
@@ -35,6 +20,8 @@ void loadLib(vector<shared_ptr<Library> > &L)
         return;
     }
 
+    map<string, vector<shared_ptr<COAsset> > > checkout;
+
     while (infile.good()) {
         string Type;
         infile >> Type;
@@ -44,18 +31,87 @@ void loadLib(vector<shared_ptr<Library> > &L)
 
             if (Type == "MEMBER") {
                 // call function to make a member from input file
+                shared_ptr<Library> member(new Member);
+                infile >> member;
+                L.push_back(member);
+
+                int coItems;
+                infile >> coItems;
+                for (int i = 0; i < coItems; ++i) {
+                    string id;
+                    infile >> id;
+
+                    shared_ptr<COAsset> coa(new COAsset);
+                    coa->assetID = id;
+                    vector<shared_ptr<COAsset> > assets = checkout[member->GetID()];
+                    vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                    if (iter != assets.end())
+                        assets.push_back(coa);
+                }
             } 
 
             else if (Type == "BOOK") {
                 // call function to make a book from input file
+                shared_ptr<Library> book(new Book);
+                infile >> book;
+                L.push_back(book);
+                
+                string id;
+                infile >> id >> id;
+
+                if (id != "NONE") {
+                    shared_ptr<COAsset> coa(new COAsset);
+                    coa->assetID = book->GetID();
+                    coa->coDate = (book->GetCheckoutDates())[0];
+                    coa->coBy = id;
+
+                    vector<shared_ptr<COAsset> > assets = checkout[id];
+                    vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                    if (iter != assets.end())
+                        assets.push_back(coa);
+                }
             } 
 
             else if (Type == "PERIODICAL") {
                 // call function to make periodical from input file
+                shared_ptr<Library> periodical(new Periodical);
+                infile >> periodical;
+                L.push_back(periodical);
+
+                string field;
+                int issues;
+                
+                infile >> field >> issues;
+
+                for (int i = 0; i < issues; ++i) {
+                    string pubDate, date, id;
+                    int volume, number;
+                    
+                    infile >> field >> volume;
+                    infile >> field >> number;
+                    infile >> field >> pubDate;
+                    infile >> field >> date;
+                    infile >> field >> id;
+                    
+                    periodical->AddIssue(volume, number, pubDate);
+                    
+                    if (id != "NONE") {
+                        shared_ptr<COAsset> coa(new COAsset);
+                        coa->assetID = periodical->GetID();
+                        coa->coDate = date;
+                        coa->issueNum = number;
+
+                        vector<shared_ptr<COAsset> > assets = checkout[id];
+                        vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                        if (iter != assets.end())
+                            assets.push_back(coa);
+                    }
+                }
             } 
 
             else {
                 // Not a valid type
+                throw "unknown type";
             }
         }
     }

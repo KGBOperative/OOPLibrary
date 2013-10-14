@@ -6,6 +6,7 @@
 // Contents: This file contains the description of a virtual class
 // called Library.
 
+#include <vector>
 #include <iostream>
 #include <memory>
 
@@ -47,6 +48,9 @@ class Library
         // This function returns the Library Type as a string.
         string GetType (void) const;
 
+        // This function returns the checkout dates for all checked out items
+        virtual vector<Date> GetCheckoutDates (void) const;
+
         // This function will only be implemented by Periodical
         virtual void AddIssue(int volume, int number, string pubDate);
 
@@ -57,10 +61,10 @@ class Library
         virtual void WriteOut (ostream & output);
 
         // This function checks out the asset to the member given
-        static void CheckOut (shared_ptr<Library> member, shared_ptr<Library> asset, Date date);
+        static void CheckOut (shared_ptr<Library> member, shared_ptr<Library> asset, Date date, int number = 0);
 
         // This function returns the asset from the member given
-        static void Return (shared_ptr<Library> member, shared_ptr<Library> asset);
+        static void Return (shared_ptr<Library> member, shared_ptr<Library> asset, int number = 0);
 
         // This function returns the object's ID
         string GetID(void);
@@ -72,20 +76,20 @@ class Library
         bool operator==(const string &id);
 
         // overloaded lessthan operator for Library pointers
-        bool operator<(const shared_ptr<Library> lib2);
+        bool operator<(const shared_ptr<Library> lib);
        
     protected:
         // This function is called by the static function CheckOut
         // The behavior of this function is defined as follows
-        //  Members: adds the lib (typed as Asset) into the checked out list, ignores the date
-        //  Assets: sets checkedOutBy to the lib (typed as Member) and sets the checkedOut date to date
-        virtual void Add(shared_ptr<Library> lib, Date date);
+        //  Members: adds the lib (typed as Asset) into the checked out list, ignores the date and issue number
+        //  Assets: sets checkedOutBy to the lib (typed as Member) and sets the checkedOut date to date, Books ignore issue number
+        virtual void Add(shared_ptr<Library> lib, Date date, int number);
 
         // This function is called by the static function Return
         // The behavior of this function is defined as follows
-        //  Members: removes the lib (typed as Asset) from the checkout out list
-        //  Assets: sets checkedOutBy to NULL
-        virtual void Remove(shared_ptr<Library> lib);
+        //  Members: removes the lib (typed as Asset) from the checkout out list, ignores issue number
+        //  Assets: sets checkedOutBy to NULL, Books ignore issue number
+        virtual void Remove(shared_ptr<Library> lib, int number);
 
         LibType Type;
         string Name;

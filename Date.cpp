@@ -56,6 +56,14 @@ void Date::SetYear (int inYear) {
     year = inYear;
 }
 
+string Date::GetDate (void) const {
+    string date;
+    stringstream ss(date);
+    ss << month << "/" << day << "/" << year;
+
+    return date;
+}
+
 int Date::GetMonth (void) const {
     return month;
 }

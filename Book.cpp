@@ -70,16 +70,8 @@ shared_ptr<Library> Book::operator = (const Book &B) {
     return shared_ptr<Library>(this);
 }
 
-void Book::CheckOut (shared_ptr<Library> member) {
-    time_t t = time(0);
-    unique_ptr<struct tm> now(localtime (&t));
-    CheckedOut = Date (now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
-    CheckedOutBy = member;
-}
-
-void Book::Return () {
-    CheckedOut = Date (0, 0, 0);
-    CheckedOutBy = NULL;
+vector<Date> Book::GetCheckoutDates(void) const {
+    return vector<Date>(1, CheckedOut);
 }
 
 void Book::ReadIn (istream & input) {
@@ -120,10 +112,26 @@ void Book::WriteOut (ostream & output) {
     output << "Type: BOOK" << endl;
     output << "Name: " << Name << endl;
     output << "ID: " << ID << endl;
-    output << "Asset_Type: " << Asset::Type << endl; // Not sure how to print enums
+    output << "Asset_Type: " << Asset::GetType() << endl; 
     output << "Author: " << Author << endl;
     output << "ISBN: " << ISBN << endl;
-    output << "Type: " << Type << endl; // Again, not sure how to print enums
     output << "Checked_Out_On: " << CheckedOut << endl;
-    output << "Checked_Out_By: " << CheckedOutBy->GetID() << endl;
+    output << "Checked_Out_By: ";
+
+    if (CheckedOutBy != NULL)
+        output << CheckedOutBy->GetID();
+    else
+        output << "NONE";
+
+    output << endl;
+}
+
+void Book::Add(shared_ptr<Library> member, Date checkoutDate, int number) {
+    CheckedOut = checkoutDate;
+    CheckedOutBy = member;
+}
+
+void Book::Remove(shared_ptr<Library> member, int number) {
+    CheckedOut.SetNull();
+    CheckedOutBy = NULL;
 }

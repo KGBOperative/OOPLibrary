@@ -37,7 +37,11 @@ int main() {
         choice = mainMenu();
         switch(choice) {
             case '1': {
-                loadLib(L);
+                try {
+                    loadLib(L);
+                } catch (const string e) {
+                    cout << "Error: " << e;
+                }
                 break;
             }
             case '2': {

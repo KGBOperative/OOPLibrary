@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <memory>
 #include <map>
 #include <iostream>
@@ -20,8 +21,60 @@
 
 using namespace std;
 
+// Comparison operators for dealing with shared_ptr's 
+// equality
+template<class T> inline bool operator==(const shared_ptr<T> lhs, const shared_ptr<T> rhs) {
+    return *lhs == *rhs;
+}
+
+// lessthan
+template<class T> inline bool operator<(const shared_ptr<T> lhs, const shared_ptr<T> rhs) {
+    return *lhs < *rhs;
+}
+
+// equality with one shared_ptr
+template<class T, class U> inline bool operator==(const shared_ptr<T> lhs, const U &rhs) {
+    return *lhs == rhs;
+}
+
+// lessthan with one shared_ptr
+template<class T, class U> inline bool operator<(const shared_ptr<T> lhs, const U &rhs) {
+    return *lhs < rhs;
+}
+
+// struct to hold the checkout information while the Library objects are being read in
+struct COAsset {
+    // Constructor
+    inline COAsset(void) {
+        assetID = "";
+        coBy = "";
+        coDate = Date("00/00/00");
+        issueNum = -1;
+    }
+
+    // overloaded equality operator
+    inline bool operator==(const string &id) {
+        return assetID == id;
+    }
+
+    inline bool operator==(const COAsset &coa) {
+        if (assetID == coa.assetID)
+            return issueNum == coa.issueNum;
+        return false;
+    }
+
+    // ID of the asset being checked out
+    string assetID;
+    // who checked-out the asset
+    string coBy;
+    // checkout date
+    Date coDate;
+    // issue num; -1 if asset is not a periodical
+    int issueNum;
+};
+
 // function to load the library from the backup file specified by the user
-void loadLib(vector<shared_ptr<Library> > &L);
+void loadLib(vector<shared_ptr<Library> > &L) throw(const string);
 
 // function to write the library to a backup file specified by the user
 void saveLib(vector<shared_ptr<Library> > &L);

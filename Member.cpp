@@ -50,11 +50,11 @@ Member & Member::operator=(const Member & m) {
     return *this;
 }
 
-void Member::Add(shared_ptr<Library> asset, Date date) {
+void Member::Add(shared_ptr<Library> asset, Date date, int number) {
     checkedOut.push_back(asset);
 }
 
-void Member::Remove(shared_ptr<Library> asset) {
+void Member::Remove(shared_ptr<Library> asset, int number) {
     for (unsigned int i = 0; i < checkedOut.size(); ++i) {
         if (checkedOut[i] == asset) {
             checkedOut.erase(checkedOut.begin() + i);
@@ -64,8 +64,50 @@ void Member::Remove(shared_ptr<Library> asset) {
 }
 
 void Member::ReadIn(istream &input) {
+    while (input.good()) {
+        string field;
+        input >> field;
+
+        if (field == "Name:")
+            getline(input, Name);
+
+        else if (field == "ID:")
+            input >> ID;
+
+        else if (field == "Address")
+            getline(input, address);
+
+        else if (field == "City:")
+            getline(input, city);
+
+        else if (field == "State")
+            getline(input, state);
+
+        else if (field == "Zip")
+            getline(input, zip);
+
+        else if (field == "Phone_Number:") {
+            getline(input, phone);
+            return;
+        }
+    }
 }
 
 void Member::WriteOut(ostream &output) {
+    output << "Type: " << Library::GetType() << endl;
+    output << "Name: " << Name << endl;
+    output << "ID: " << ID << endl;
+    output << "Address: " << address << endl;
+    output << "City: " << city << endl;
+    output << "State: " << state << endl;
+    output << "Zip: " << zip << endl;
+    output << "Phone_Number: " << phone;
+    output << "Checked_Out: " << checkedOut.size();
+
+    for (unsigned int i = 0; i < checkedOut.size(); ++i) {
+        output << " " << checkedOut[i]->GetID();
+    }
+
+    output << endl;
 }
 

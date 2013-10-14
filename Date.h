@@ -47,6 +47,9 @@ class Date
         // This accessor function returns the value of month.
         int GetMonth (void) const;
 
+        // This accessor returns the date as a string
+        string GetDate (void) const;
+
         // This accessor function returns the value of day.
         int GetDay (void) const;
 

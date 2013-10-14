@@ -23,8 +23,7 @@ class Member: public Library
         // The overloaded constructor to set all informational data at once
         Member (string name, string id, string address, string city, string state, string zip, string phone);
 
-        // This constructor will create a new member object identical to the passed member
-        // object.
+        // This constructor will create a new member object identical to the passed member object.
         Member (const Member & m);
         
         // This assignment operator will copy one object to another of the same type.
@@ -41,10 +40,10 @@ class Member: public Library
 
     private:
         // Adds the asset given into the list of checked out items
-        void Add(shared_ptr<Library> asset, Date date);
+        void Add(shared_ptr<Library> asset, Date date, int number);
 
         // Removes the asset given from the list of checked out items
-        void Remove(shared_ptr<Library> asset);
+        void Remove(shared_ptr<Library> asset, int number);
 
         vector <shared_ptr<Library> > checkedOut;
         string address, city, state, zip;
