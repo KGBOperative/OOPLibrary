@@ -20,11 +20,11 @@ Member::Member (string name, string id, string Address, string City, string Stat
     Type = MEMBER;
     Name = name;
     ID = id;
-    address = address;
-    city = city;
-    state = state;
-    zip = zip;
-    phone = phone;
+    address = Address;
+    city = City;
+    state = State;
+    zip = Zip;
+    phone = Phone;
 }
 
 Member::Member(const Member & m) {

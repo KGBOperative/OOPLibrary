@@ -199,7 +199,7 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         cout << "Enter Asset type to create-\n";
         cout << "\t1) Book\n";
         cout << "\t2) Periodical\n";
-        cout << "type: ";
+        cout << "Type: ";
 
         cin >> choice; 
 
@@ -213,20 +213,21 @@ void addAsset(vector<shared_ptr<Library> > &L) {
     // Book 
     if (choice == '1') {
         string name, id, asType, author, isbn, bookType; 
-
+	
+	cin.ignore();
         cout << "Creating new Book\n";
         cout << "Book Title: ";
-        cin >> name;
+        getline(cin, name);
         cout << "Book ID: ";
-        cin >> id;
+        getline(cin, id);
         cout << "Asset Type: ";
-        cin >> asType;
+        getline(cin, asType);
         cout << "Author: ";
-        cin >> author;
+        getline(cin, author);
         cout << "ISBN: ";
-        cin >> isbn;
+        getline(cin, isbn);
         cout << "Book Type: ";
-        cin >> bookType;
+        getline(cin, bookType);
         
         shared_ptr<Library> newBook(new Book(name, id, asType, author, isbn, bookType));
         L.push_back(newBook);
@@ -237,15 +238,16 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         string name, author, id, asType, issn, pubDate;
         int numIssues, volume, volNum; 
 
+	cin.ignore();
         cout << "Creating new Periodical:\n";
         cout << "Periodical Title: ";
-        cin >> name;
+        getline(cin, name);
         cout << "Periodical ID: ";
-        cin >> id;
+        getline(cin, id);
         cout << "Asset Type: ";
-        cin >> asType;
+	getline(cin, asType);
         cout << "ISSN: ";
-        cin >> author;
+        getline(cin, issn);
         cout << "Number of issues to store: ";
         cin >> numIssues;
 
@@ -254,8 +256,7 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         for (int i = 0; i < numIssues; ++i) {
             cout << "Volume: ";
             cin >> volume;
-            cout << "Number: ";
-            cin >> volNum;
+            volNum = i + 1;
             cout << "Publication Date (MM/DD/YYYY): ";
             cin >> pubDate;
             
