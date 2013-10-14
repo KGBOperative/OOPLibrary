@@ -228,7 +228,7 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         getline(cin, isbn);
         cout << "Book Type: ";
         getline(cin, bookType);
-        
+ 
         shared_ptr<Library> newBook(new Book(name, id, asType, author, isbn, bookType));
         L.push_back(newBook);
     }	
