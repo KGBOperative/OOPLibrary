@@ -21,8 +21,10 @@ Date::Date (const Date & D) {
 }
 
 Date::Date (string date) {
+    /*
     stringstream ss(date);
     ss >> month >> day >> year;
+    */
 }
 
 Date::Date (int inMonth, int inDay, int inYear) {

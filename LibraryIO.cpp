@@ -27,6 +27,8 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
         if (Type == "Type:") {
             infile >> Type;
 
+            debug << "found Type = " << Type << endl;
+
             if (Type == "MEMBER") {
                 debug << "Entering if (Type == \"MEMBER\")\n";
                 // call function to make a member from input file

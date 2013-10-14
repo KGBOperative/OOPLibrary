@@ -75,34 +75,44 @@ vector<Date> Book::GetCheckoutDates(void) const {
 }
 
 void Book::ReadIn (istream & input) {
-    for (string value; input.good(); input >> value) {
+    for (string line; input.good(); getline(input, line)) {
+        int i = line.find(" ");
+        string fieldName = line.substr(0, i);
+        string fieldData = line.substr(i+1);
 
-        if (value == "Name:") 
-            getline(input, Name);
+        if (fieldName == "Name:")  {
+            Name = fieldData;
+            debug << "Getting name = " << fieldData << endl;
+        }
 
-        else if (value == "ID:") 
-            input >> ID;
+        else if (fieldName == "ID:") {
+            ID = fieldData;
+            debug << "Getting ID = " << fieldData << endl;
+        }
 
-        else if (value == "Asset_Type:") {
-            string type;
-            input >> type;
-            Asset::SetType(type);
+        else if (fieldName == "Asset_Type:") {
+            Asset::SetType(fieldData);
+            debug << "Getting = Asset_Type = " << fieldData << endl;
         } 
         
-        else if (value == "Author:")
-            getline(input, Author);
+        else if (fieldName == "Author:") {
+            Author = fieldData;
+            debug << "Getting Author = " << fieldData << endl;
+        }
 
-        else if (value == "ISBN") 
-            input >> ISBN;
+        else if (fieldName == "ISBN:") {
+            ISBN = fieldData;
+            debug << "Getting ISBN = " << fieldData << endl;
+        }
 
-        else if (value == "Type:") {
-            string type;
-            input >> type;
-            SetType(type);
+        else if (fieldName == "Type:") {
+            Book::SetType(fieldData);
+            debug << "Getting book Type = " << fieldData << endl;
         } 
         
-        else if (value == "Checked_Out_On") {
-            input >> CheckedOut;
+        else if (fieldName == "Checked_Out_On:") {
+            CheckedOut = Date(fieldData);
+            debug << "Getting checkout date = " << fieldData << endl;
             return;
         }
     }

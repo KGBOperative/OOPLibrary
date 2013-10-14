@@ -1,13 +1,3 @@
-Type: MEMBER
-Name: Anne A. Student
-ID: M101
-Address: 25 Meridian Circle
-City: Rohnert Park
-State: California
-Zip: 94928
-Phone_Number: 707-664-1234
-Checked_Out: 2  B501    P502
-
 Type: BOOK 
 Name: Fire in the Valley
 ID: B501
@@ -17,6 +7,16 @@ ISBN: 978-0071358927
 Type: NONFICTION
 Checked_Out_On: 09/13/2013
 Checked_Out_By: M101
+
+Type: MEMBER
+Name: Anne A. Student
+ID: M101
+Address: 25 Meridian Circle
+City: Rohnert Park
+State: California
+Zip: 94928
+Phone_Number: 707-664-1234
+Checked_Out: 2  B501    P502
 
 Type: PERIODICAL
 Name: Time
