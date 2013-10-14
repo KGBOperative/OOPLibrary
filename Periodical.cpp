@@ -171,18 +171,18 @@ void Periodical::WriteOut (ostream & output)
             output << Issues[i].CheckedOutBy->GetID() << endl;
                     
         else
-            output << "None.\n";
+            output << "NONE\n";
     }
 }
 
 void Periodical::Add(shared_ptr<Library> member, Date checkedOutDate, int number) {
-    Issues[number].CheckedOut = checkedOutDate;
-    Issues[number].CheckedOutBy = member;
+    Issues[number-1].CheckedOut = checkedOutDate;
+    Issues[number-1].CheckedOutBy = member;
 }
 
 void Periodical::Remove(shared_ptr<Library> member, int number) {
-    Issues[number].CheckedOut.SetNull();
-    Issues[number].CheckedOutBy = NULL;
+    Issues[number-1].CheckedOut.SetNull();
+    Issues[number-1].CheckedOutBy = NULL;
 }
 
 Periodical::Issue::Issue(void)

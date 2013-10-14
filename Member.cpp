@@ -74,16 +74,16 @@ void Member::ReadIn(istream &input) {
         else if (field == "ID:")
             input >> ID;
 
-        else if (field == "Address")
+        else if (field == "Address:")
             getline(input, address);
 
         else if (field == "City:")
             getline(input, city);
 
-        else if (field == "State")
+        else if (field == "State:")
             getline(input, state);
 
-        else if (field == "Zip")
+        else if (field == "Zip:")
             getline(input, zip);
 
         else if (field == "Phone_Number:") {
@@ -101,13 +101,13 @@ void Member::WriteOut(ostream &output) {
     output << "City: " << city << endl;
     output << "State: " << state << endl;
     output << "Zip: " << zip << endl;
-    output << "Phone_Number: " << phone;
+    output << "Phone_Number: " << phone << endl;
     output << "Checked_Out: " << checkedOut.size();
 
     for (unsigned int i = 0; i < checkedOut.size(); ++i) {
         output << " " << checkedOut[i]->GetID();
     }
 
-    output << endl;
+    output << endl << endl;
 }
 

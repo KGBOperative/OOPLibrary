@@ -49,7 +49,7 @@ struct COAsset {
         assetID = "";
         coBy = "";
         coDate = Date("00/00/00");
-        issueNum = -1;
+        issueNum = 0;
     }
 
     // overloaded equality operator

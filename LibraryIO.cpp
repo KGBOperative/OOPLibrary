@@ -44,7 +44,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                     shared_ptr<COAsset> coa(new COAsset);
                     coa->assetID = id;
                     vector<shared_ptr<COAsset> > assets = checkout[member->GetID()];
-                    vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                    auto iter = find(assets.begin(), assets.end(), coa);
                     if (iter != assets.end())
                         assets.push_back(coa);
                 }
@@ -66,7 +66,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                     coa->coBy = id;
 
                     vector<shared_ptr<COAsset> > assets = checkout[id];
-                    vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                    auto iter = find(assets.begin(), assets.end(), coa);
                     if (iter != assets.end())
                         assets.push_back(coa);
                 }
@@ -102,7 +102,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                         coa->issueNum = number;
 
                         vector<shared_ptr<COAsset> > assets = checkout[id];
-                        vector<shared_ptr<COAsset> >::iterator iter = find(assets.begin(), assets.end(), coa);
+                        auto iter = find(assets.begin(), assets.end(), coa);
                         if (iter != assets.end())
                             assets.push_back(coa);
                     }
@@ -113,6 +113,20 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                 // Not a valid type
                 throw "unknown type";
             }
+        }
+    }
+
+    for (auto map_iter = checkout.begin(); map_iter != checkout.end(); ++map_iter) {
+        shared_ptr<Library> searchMem(new Library(map_iter->first));
+        shared_ptr<Library> member = *find(L.begin(), L.end(), searchMem);
+        auto assets = map_iter->second;
+
+        for (unsigned int i = 0; i < assets.size(); ++i) {
+            shared_ptr<Library> asset = *find(L.begin(), L.end(), shared_ptr<Library>(new Library(assets[i]->assetID)));
+            if (assets[i]->issueNum > 0)
+                Library::CheckOut(member, asset, assets[i]->coDate, assets[i]->issueNum);
+            else
+                Library::CheckOut(member, asset, assets[i]->coDate);
         }
     }
 }

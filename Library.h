@@ -26,6 +26,9 @@ class Library
         // The default constructor creates a new library object.
         Library (void);
 
+        // overloaded constructor with just ID for searching purposes
+        Library (string id);
+
         // This constructor will create a new library object identical to the passed library
         // object.
         Library (const shared_ptr<Library> S);
@@ -70,13 +73,13 @@ class Library
         string GetID(void);
 
         // overloaded equality operator for Library pointers
-        bool operator==(const shared_ptr<Library> lib);
+        bool operator==(const Library &lib);
 
         // overloaded equality operator for comparing Library pointers to ID strings
         bool operator==(const string &id);
 
         // overloaded lessthan operator for Library pointers
-        bool operator<(const shared_ptr<Library> lib);
+        bool operator<(const Library &lib);
        
     protected:
         // This function is called by the static function CheckOut

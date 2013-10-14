@@ -10,6 +10,10 @@ Library::Library (void) {
     Type = LIBRARY;
 }
 
+Library::Library (string id) {
+    ID = id;
+}
+
 Library::Library (const shared_ptr<Library> S) {
     Type = S->Type;
     Name = S->Name;
@@ -110,8 +114,8 @@ void Library::Add(shared_ptr<Library> lib, Date dueDate, int number) {
 void Library::Remove(shared_ptr<Library> lib, int number) {
 }
 
-bool Library::operator==(const shared_ptr<Library> lib) {
-    return ID == lib->ID;
+bool Library::operator==(const Library &lib) {
+    return ID == lib.ID;
 }
 
 bool Library::operator==(const string &id) {
@@ -122,7 +126,7 @@ bool operator==(const shared_ptr<Library> lib, string id) {
     return *lib == id;
 }
 
-bool Library::operator<(const shared_ptr<Library> lib) {
-    return ID < lib->ID;
+bool Library::operator<(const Library &lib) {
+    return ID < lib.ID;
 }
 
