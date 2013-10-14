@@ -342,4 +342,13 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
     } while (choice != 'q');
 }
 
+void overdueAssetList(const vector<shared_ptr<Library> &L)
+{return;}
+
+void overdueMemberList (const vector<shared_ptr<Library> &L)
+{return;}
+
+void areaCodeList (const vector<shared_ptr<Library> &L)
+{return;}
+
 #endif
