@@ -12,7 +12,7 @@
 
 #include "Date.h"
 
-#define DEBUG 0
+#define DEBUG true
 #define debug if (DEBUG) cout
 
 using namespace std;

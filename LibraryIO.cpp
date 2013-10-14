@@ -11,14 +11,12 @@ using namespace std;
 
 void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
     string filename;
-    cout << "Enter the filename of the library to load:\n";
+    cout << "Enter the filename of the library to load: ";
     cin >> filename; 
     ifstream infile(filename.c_str());
 
-    if(infile.fail()) {
-        cout << filename << " not found.\n";
-        return;
-    }
+    if(infile.fail())
+        throw (filename + " not found");
 
     map<string, vector<shared_ptr<COAsset> > > checkout;
 
@@ -30,26 +28,34 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
             infile >> Type;
 
             if (Type == "MEMBER") {
+                debug << "Entering if (Type == \"MEMBER\")\n";
                 // call function to make a member from input file
                 shared_ptr<Library> member(new Member);
                 infile >> member;
                 L.push_back(member);
-
+                
                 int coItems;
                 infile >> coItems;
+                
+                debug << "number of checked out items = " << coItems << endl;
+                
                 for (int i = 0; i < coItems; ++i) {
+                    debug << "inside coItem loop\n";
                     string id;
                     infile >> id;
-
+                    
                     shared_ptr<COAsset> coa(new COAsset);
                     coa->assetID = id;
-                    vector<shared_ptr<COAsset> > assets = checkout[member->GetID()];
+                    
+                    auto assets = checkout[member->GetID()];
                     auto iter = find(assets.begin(), assets.end(), coa);
                     if (iter != assets.end())
                         assets.push_back(coa);
                 }
-            } 
 
+                debug << "Leaving if (Type == \"MEMBER\")\n";
+            } 
+            
             else if (Type == "BOOK") {
                 // call function to make a book from input file
                 shared_ptr<Library> book(new Book);
@@ -58,31 +64,33 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                 
                 string id;
                 infile >> id >> id;
-
+                
+                debug << "book id = " << id << endl;
+                
                 if (id != "NONE") {
                     shared_ptr<COAsset> coa(new COAsset);
                     coa->assetID = book->GetID();
                     coa->coDate = (book->GetCheckoutDates())[0];
                     coa->coBy = id;
-
-                    vector<shared_ptr<COAsset> > assets = checkout[id];
+                    
+                    auto assets = checkout[id];
                     auto iter = find(assets.begin(), assets.end(), coa);
                     if (iter != assets.end())
                         assets.push_back(coa);
                 }
             } 
-
+            
             else if (Type == "PERIODICAL") {
                 // call function to make periodical from input file
                 shared_ptr<Library> periodical(new Periodical);
                 infile >> periodical;
                 L.push_back(periodical);
-
+                
                 string field;
                 int issues;
                 
                 infile >> field >> issues;
-
+                
                 for (int i = 0; i < issues; ++i) {
                     string pubDate, date, id;
                     int volume, number;
@@ -95,13 +103,15 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                     
                     periodical->AddIssue(volume, number, pubDate);
                     
+                    debug << "periodical id = " << id << endl;
+                    
                     if (id != "NONE") {
                         shared_ptr<COAsset> coa(new COAsset);
                         coa->assetID = periodical->GetID();
                         coa->coDate = date;
                         coa->issueNum = number;
 
-                        vector<shared_ptr<COAsset> > assets = checkout[id];
+                        auto assets = checkout[id];
                         auto iter = find(assets.begin(), assets.end(), coa);
                         if (iter != assets.end())
                             assets.push_back(coa);
@@ -117,6 +127,8 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
     }
 
     for (auto map_iter = checkout.begin(); map_iter != checkout.end(); ++map_iter) {
+        cout << map_iter->first << endl;
+
         shared_ptr<Library> searchMem(new Library(map_iter->first));
         shared_ptr<Library> member = *find(L.begin(), L.end(), searchMem);
         auto assets = map_iter->second;
