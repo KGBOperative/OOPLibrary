@@ -37,15 +37,17 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                 infile >> member;
                 L.push_back(member);
                 
+                string ignoreThis;
+                infile >> ignoreThis;
                 int coItems;
                 infile >> coItems;
                 
                 debug << "number of checked out items = " << coItems << endl;
                 
                 for (int i = 0; i < coItems; ++i) {
-                    debug << "inside coItem loop\n";
                     string id;
                     infile >> id;
+                    debug << "inside coItem loop with id = " << id << endl;
                     
                     shared_ptr<COAsset> coa(new COAsset);
                     coa->assetID = id;
@@ -60,6 +62,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
             } 
             
             else if (Type == "BOOK") {
+                debug << "Entering if (Type == \"BOOK\")\n";
                 // call function to make a book from input file
                 shared_ptr<Library> book(new Book);
                 infile >> book;
@@ -68,7 +71,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                 string id;
                 infile >> id >> id;
                 
-                debug << "book id = " << id << endl;
+                debug << "book " << book->GetID() << " is checked out by " << id << endl;
                 
                 if (id != "NONE") {
                     shared_ptr<COAsset> coa(new COAsset);
@@ -81,9 +84,12 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                     if (iter != assets.end())
                         assets.push_back(coa);
                 }
+
+                debug << "Exiting if (Type == \"BOOK\")\n";
             } 
             
             else if (Type == "PERIODICAL") {
+                debug << "Entering if (Type == \"PERIODICAL\")\n";
                 // call function to make periodical from input file
                 shared_ptr<Library> periodical(new Periodical);
                 infile >> periodical;
@@ -128,6 +134,8 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                             debug << *iter;
                     }
                 }
+
+                debug << "Exiting if (Type == \"PERIODICAL\")\n";
             } 
 
             else {
@@ -144,9 +152,9 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
         shared_ptr<Library> member = *find(L.begin(), L.end(), searchMem);
         auto assets = map_iter->second;
 
-        debug << " has checked out:";
+        debug << " has checked out " << assets.size() << " assets\n";
         for (unsigned int i = 0; i < assets.size(); ++i) {
-            debug << " " << assets[i]->assetID;
+            debug << "\t" << assets[i]->assetID << endl;
             shared_ptr<Library> asset = *find(L.begin(), L.end(), shared_ptr<Library>(new Library(assets[i]->assetID)));
             if (assets[i]->issueNum > 0)
                 Library::CheckOut(member, asset, assets[i]->coDate, assets[i]->issueNum);
