@@ -20,24 +20,6 @@ Periodical::Periodical (string name, string id, string aType, string issn) {
     Library::Type = PERIODICAL;
     Name = name;
     ID = id;
-
-    if (aType == "SHORT") 
-        Asset::Type = SHORT;
-    else if (aType == "LITERARY")
-        Asset::Type = LITERARY;
-    else if (aType == "MYSTERY") 
-        Asset::Type = MYSTERY;
-    else if (aType == "SCIFI")
-        Asset::Type = SCIFI;
-    else if (aType == "SELFHELP")
-        Asset::Type = SELFHELP;
-    else if (aType == "BIOGRAPHY")
-        Asset::Type = BIOGRAPHY;
-    else if (aType == "COOKING")
-        Asset::Type = COOKING;
-    else if (aType == "SPORTS")
-        Asset::Type = SPORTS;
-
      ISSN = issn;
 }
 
@@ -56,30 +38,6 @@ Periodical & Periodical::operator = (const Periodical & P)
     Issues = P.Issues;
 
     return *this;
-}
-
-void Periodical::SetType (string TypeS)
-{
-    if (TypeS == "FICTION") 
-        Type = FICTION;
-
-    else if (TypeS == "NONFICTION") 
-        Type = NONFICTION;
-
-/* Not sure if this line is necessary --Aman
-    else 
-        cout << "Not a valid Type" << endl;
-*/
-}
-
-string Periodical::GetType (void) const
-{
-    switch (Type)
-    {
-        case FICTION: return "FICTION";
-        case NONFICTION: return "NONFICTION";
-        default: return "";
-    }
 }
 
 vector<Date> Periodical::GetCheckoutDates(void) const {
@@ -102,50 +60,30 @@ void Periodical::AddIssue(int volume, int volNum, string pubDate) {
 
 void Periodical::ReadIn (istream & input)
 {
-    for (string value; input.good(); input >> value) {
+    for (string line; input.good(); getline(input, line)) {
+        int i = line.find(" ");
+        string fieldName = line.substr(0, i);
+        string fieldData = line.substr(i+1);
 
-        if (value == "Name:") 
-            getline(input, Name);
-        
-        else if (value == "ID:") 
-            input >> ID;
+        if (fieldName == "Name:")  {
+            Name = fieldData;
+            debug << "Getting name = " << fieldData << endl;
+        }
 
-        else if (value == "Asset_Type:") {
-            string type;
-            input >> type;
-            Asset::SetType(type);
+        else if (fieldName == "ID:") {
+            ID = fieldData;
+            debug << "Getting ID = " << fieldData << endl;
+        }
+
+        else if (fieldName == "Asset_Type:") {
+            Asset::SetType(fieldData);
+            debug << "Getting Asset_Type = " << fieldData << endl;
         } 
-        
-        else if (value == "ISSN") 
-            input >> ISSN;
 
-        else if (value == "Issues") {
-            int numIssues;
-            input >> numIssues;
-
-            for (int i; i < numIssues; i++) {
-                Issue issue;
-
-                for (value; input.good(); input >> value) {
-
-                    if (value == "Volume:")
-                        input >> issue.Volume;
-                    
-                    else if (value == "Number:")
-                        input >> issue.Number;
-                    
-                    else if (value == "Publication_Date:")
-                        input >> issue.PubDate;
-                    
-                    else if (value == "Checked_Out_On:") {
-                        input >> issue.CheckedOut;
-                        break;
-                    }
-                }
-
-                Issues.push_back(issue);
-            }
-                    
+        else if (fieldName == "ISSN:") {
+            ISSN = fieldData;
+            debug << "Getting ISSN = " << fieldData << endl;
+            
             return;
         }
     }
@@ -162,7 +100,7 @@ void Periodical::WriteOut (ostream & output)
                     
     for (unsigned int i = 0; i < Issues.size(); i++) {
         output << "Volume: " << Issues[i].Volume;
-        output << "Number: " << Issues[i].Number << endl;
+        output << "\tNumber: " << Issues[i].Number << endl;
         output << "Publication_Date: " << Issues[i].PubDate << endl;
         output << "Checked_Out_On: " << Issues[i].CheckedOut << endl;;
         output << "Checked_Out_By: ";

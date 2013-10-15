@@ -94,6 +94,8 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                 
                 infile >> field >> issues;
                 
+                debug << "number of periodical issues = " << issues << endl;
+                
                 for (int i = 0; i < issues; ++i) {
                     string pubDate, date, id;
                     int volume, number;
@@ -106,7 +108,7 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                     
                     periodical->AddIssue(volume, number, pubDate);
                     
-                    debug << "periodical id = " << id << endl;
+                    debug << "periodical issue #" << number << " checked out by = " << id << endl;
                     
                     if (id != "NONE") {
                         shared_ptr<COAsset> coa(new COAsset);
@@ -154,7 +156,7 @@ void saveLib(vector<shared_ptr<Library> > &L) {
     ofstream outfile(filename.c_str());
 
     for (unsigned int i = 0; i < L.size(); ++i)
-        outfile << L[i];
+        outfile << L[i] << endl;
 }
 
 void addMember(vector<shared_ptr<Library> > &L) {
@@ -351,32 +353,27 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
 
 void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 {
-  cout << "\t\tOverdue Assets as of " << today << endl;
-  // L.sort(dateSort())
-  for (unsigned int i=0;i<L.size();i++) //for each Lib object
-    {
-      vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
-      for (unsigned int j=0; j<coDates.size(); j++) // iterate through each due date for each object
-	{
-	  if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) // if it is an overdue book
-	    L[i]->WriteOut(cout); // Write out the information 
-	  else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
-	    L[i]->WriteOut(cout); // Write out the information
-	}
+    cout << "\t\tOverdue Assets as of " << today << endl;
+    // L.sort(dateSort())
+    for (unsigned int i=0;i<L.size();i++) {//for each Lib object 
+        vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
+
+        for (unsigned int j=0; j<coDates.size(); j++) {// iterate through each due date for each object 
+            if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) // if it is an overdue book
+                L[i]->WriteOut(cout); // Write out the information 
+            else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
+                L[i]->WriteOut(cout); // Write out the information
+        }
     }
-  return;
+    return;
 }
 
-  void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
-{
-
-  return;
+void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today) {
+    return;
 }
 
-  void areaCodeList (const vector<shared_ptr<Library> > &L)
-{
-  
-  return;
+void areaCodeList (const vector<shared_ptr<Library> > &L) {
+    return;
 }
 
 #endif
