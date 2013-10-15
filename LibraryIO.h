@@ -112,11 +112,13 @@ void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetI
 void makeReport(const vector<shared_ptr<Library> > &L);
 
 // Creates a report of overdue assets, sorted by due date.
-void overdueAssetList(const vector<shared_ptr<Library> > &L);
+void overdueAssetList(const vector<shared_ptr<Library> > &L, Date & today);
 
 // Creates a report of members with overdue assets as well as the assets that are overdue for each member
-void overdueMemberList(const vector<shared_ptr<Library> > &L);
+void overdueMemberList(const vector<shared_ptr<Library> > &L, 
+		       const Date today);
 
 // Creats a report of members in a specific area code
 void areaCodeList (const vector<shared_ptr<Library> > &L);
+
 #endif  // LIBRARYIO_H

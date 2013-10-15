@@ -6,6 +6,7 @@
 // Contents: This file contains the implememntation of the functions defined in Menu.h
 
 #include "LibraryIO.h"
+#include "Date.h"
 #include <iostream>
 using namespace std;
 
@@ -320,6 +321,9 @@ void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetI
 void makeReport(const vector<shared_ptr<Library> > &L) {
     char choice; 
     do {
+      Date today; 
+      cout << "Enter today's date (MM/DD/YYYY): ";
+      cin >> today;
         cout << "Report Menu:\n";
         cout << "\t1) List overdue Assets\n";
         cout << "\t2) List members with overdue Assets\n";
@@ -328,27 +332,51 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
         cout << "Selection: ";
 
         cin >> choice; 
-        tolower(choice);
+        choice = tolower(choice);
 
         switch (choice) {
-            case '1':
-            case '2':
-            case '3':
-            case 'q':
-                break;
-            default:
-                cout << "Invalid choice\n";
+	case '1': 
+	  overdueAssetList(L, today);
+	case '2': 
+	  overdueMemberList(L, today);
+	case '3': 
+	  areaCodeList(L); 
+	case 'q':
+	  break;
+	default:
+	  cout << "Invalid choice\n";
         }
     } while (choice != 'q');
 }
 
-void overdueAssetList(const vector<shared_ptr<Library> &L)
-{return;}
+void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
+{
+  cout << "\t\tOverdue Assets as of " << today << endl;
+  // L.sort(dateSort())
+  for (unsigned int i=0;i<L.size();i++) //for each Lib object
+    {
+      vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
+      for (unsigned int j=0; j<coDates.size(); j++) // iterate through each due date for each object
+	{
+	  if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) // if it is an overdue book
+	    L[i]->WriteOut(cout); // Write out the information 
+	  else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
+	    L[i]->WriteOut(cout); // Write out the information
+	}
+    }
+  return;
+}
 
-void overdueMemberList (const vector<shared_ptr<Library> &L)
-{return;}
+  void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
+{
 
-void areaCodeList (const vector<shared_ptr<Library> &L)
-{return;}
+  return;
+}
+
+  void areaCodeList (const vector<shared_ptr<Library> > &L)
+{
+  
+  return;
+}
 
 #endif
