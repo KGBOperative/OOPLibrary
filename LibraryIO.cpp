@@ -1,5 +1,5 @@
 #ifndef LIBRARYIO_CPP
-#define LIBRARY()_CPP
+#define LIBRARYIO_CPP
 
 // File: LibraryIO.cpp
 // Authors: Amandeep Gill, Marshall Jankovsky, Kyle Janssens
@@ -115,11 +115,17 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
                         coa->assetID = periodical->GetID();
                         coa->coDate = date;
                         coa->issueNum = number;
-
+                        
                         auto assets = checkout[id];
                         auto iter = find(assets.begin(), assets.end(), coa);
-                        if (iter != assets.end())
+                        
+                        if (assets.size() < 1 || iter != assets.end()) {
+                            debug << coa;
                             assets.push_back(coa);
+                        }
+                        
+                        else
+                            debug << *iter;
                     }
                 }
             } 
@@ -132,19 +138,22 @@ void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
     }
 
     for (auto map_iter = checkout.begin(); map_iter != checkout.end(); ++map_iter) {
-        cout << map_iter->first << endl;
+        debug << "member id = " << map_iter->first;
 
         shared_ptr<Library> searchMem(new Library(map_iter->first));
         shared_ptr<Library> member = *find(L.begin(), L.end(), searchMem);
         auto assets = map_iter->second;
 
+        debug << " has checked out:";
         for (unsigned int i = 0; i < assets.size(); ++i) {
+            debug << " " << assets[i]->assetID;
             shared_ptr<Library> asset = *find(L.begin(), L.end(), shared_ptr<Library>(new Library(assets[i]->assetID)));
             if (assets[i]->issueNum > 0)
                 Library::CheckOut(member, asset, assets[i]->coDate, assets[i]->issueNum);
             else
                 Library::CheckOut(member, asset, assets[i]->coDate);
         }
+        debug << endl;
     }
 }
 
@@ -152,6 +161,7 @@ void saveLib(vector<shared_ptr<Library> > &L) {
     string filename;
     cout << "Enter file to write to: ";
     cin >> filename;
+    cin.ignore();
 
     ofstream outfile(filename.c_str());
 
@@ -215,7 +225,7 @@ void addAsset(vector<shared_ptr<Library> > &L) {
     // Book 
     if (choice == '1') {
         string name, id, asType, author, isbn, bookType; 
-	
+
         cin.ignore();
         cout << "Creating new Book\n";
         cout << "Book Title: ";

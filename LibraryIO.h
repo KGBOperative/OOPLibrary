@@ -63,6 +63,16 @@ struct COAsset {
         return false;
     }
 
+    // overloaded output operator for COAsset
+    inline friend ostream & operator<<(ostream &output, const shared_ptr<COAsset> coa) {
+        output << "assetID = " << coa->assetID << endl;
+        output << "coBy = " << coa->coBy << endl;
+        output << "coDate = " << coa->coDate << endl;
+        output << "issueNum = " << coa->issueNum << endl;
+
+        return output;
+    }
+
     // ID of the asset being checked out
     string assetID;
     // who checked-out the asset

@@ -20,7 +20,7 @@ Periodical::Periodical (string name, string id, string aType, string issn) {
     Library::Type = PERIODICAL;
     Name = name;
     ID = id;
-     ISSN = issn;
+    ISSN = issn;
 }
 
 Periodical::Periodical (const Periodical & P)
