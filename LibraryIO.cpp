@@ -191,8 +191,7 @@ void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string) 
         }
     }
 
-    string err = "ID: " + id + " not found";
-    throw err;
+    throw ("ID: " + id + " not found");
 }
 
 void addAsset(vector<shared_ptr<Library> > &L) {
@@ -217,7 +216,7 @@ void addAsset(vector<shared_ptr<Library> > &L) {
     if (choice == '1') {
         string name, id, asType, author, isbn, bookType; 
 	
-	cin.ignore();
+        cin.ignore();
         cout << "Creating new Book\n";
         cout << "Book Title: ";
         getline(cin, name);
@@ -241,14 +240,14 @@ void addAsset(vector<shared_ptr<Library> > &L) {
         string name, author, id, asType, issn, pubDate;
         int numIssues, volume, volNum; 
 
-	cin.ignore();
+        cin.ignore();
         cout << "Creating new Periodical:\n";
         cout << "Periodical Title: ";
         getline(cin, name);
         cout << "Periodical ID: ";
         getline(cin, id);
         cout << "Asset Type: ";
-	getline(cin, asType);
+        getline(cin, asType);
         cout << "ISSN: ";
         getline(cin, issn);
         cout << "Number of issues to store: ";
@@ -286,13 +285,11 @@ void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string asse
         Library::CheckOut(L[member], L[asset], date);
 
     else if (member == -1) {
-        string err = "member " + memberID + " not found";
-        throw err;
+        throw ("member " + memberID + " not found");
     }
 
     else {
-        string err = "asset " + assetID + " not found";
-        throw err;
+        throw ("asset " + assetID + " not found");
     }
 }
 
@@ -310,22 +307,20 @@ void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetI
         Library::Return(L[member], L[asset]);
 
     else if (member == -1) {
-        string err = "member " + memberID + " not found";
-        throw err;
+        throw ("member " + memberID + " not found");
     }
 
     else {
-        string err = "asset " + assetID + " not found";
-        throw err;
+        throw ("asset " + assetID + " not found");
     }
 }
 
 void makeReport(const vector<shared_ptr<Library> > &L) {
     char choice; 
     do {
-      Date today; 
-      cout << "Enter today's date (MM/DD/YYYY): ";
-      cin >> today;
+        Date today; 
+        cout << "Enter today's date (MM/DD/YYYY): ";
+        cin >> today;
         cout << "Report Menu:\n";
         cout << "\t1) List overdue Assets\n";
         cout << "\t2) List members with overdue Assets\n";
@@ -337,16 +332,16 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
         choice = tolower(choice);
 
         switch (choice) {
-	case '1': 
-	  overdueAssetList(L, today);
-	case '2': 
-	  overdueMemberList(L, today);
-	case '3': 
-	  areaCodeList(L); 
-	case 'q':
-	  break;
-	default:
-	  cout << "Invalid choice\n";
+            case '1': 
+                overdueAssetList(L, today);
+            case '2': 
+                overdueMemberList(L, today);
+            case '3': 
+                areaCodeList(L); 
+            case 'q':
+                break;
+            default:
+                cout << "Invalid choice\n";
         }
     } while (choice != 'q');
 }
@@ -365,7 +360,6 @@ void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
                 L[i]->WriteOut(cout); // Write out the information
         }
     }
-    return;
 }
 
 void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today) {
