@@ -106,11 +106,13 @@ void Periodical::WriteOut (ostream & output)
         output << "Checked_Out_By: ";
                     
         if (Issues[i].CheckedOutBy != NULL)
-            output << Issues[i].CheckedOutBy->GetID() << endl;
+	  output << Issues[i].CheckedOutBy->GetID() << endl;
                     
         else
             output << "NONE\n";
     }
+
+    output << endl;
 }
 
 void Periodical::Add(shared_ptr<Library> member, Date checkedOutDate, int number) {

@@ -51,6 +51,11 @@ Member & Member::operator=(const Member & m) {
     return *this;
 }
 
+string Member::GetPhone () const
+{
+    return phone;
+}
+
 void Member::Add(shared_ptr<Library> asset, Date date, int number) {
     checkedOut.push_back(asset);
 }

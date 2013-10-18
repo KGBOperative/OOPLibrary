@@ -129,6 +129,6 @@ void overdueMemberList(const vector<shared_ptr<Library> > &L,
 		       const Date today);
 
 // Creats a report of members in a specific area code
-void areaCodeList (const vector<shared_ptr<Library> > &L);
+void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today);
 
 #endif  // LIBRARYIO_H

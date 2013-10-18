@@ -64,6 +64,9 @@ class Library
         // This function will be used be the child classes to write out object state data to a report file
         virtual void WriteOut (ostream & output);
 
+	// This function will return a phone number - only used by Member
+	virtual string GetPhone (void) const;
+
         // This function checks out the asset to the member given
         static void CheckOut (shared_ptr<Library> member, shared_ptr<Library> asset, Date date, int number = 0);
 
@@ -72,6 +75,9 @@ class Library
 
         // This function returns the object's ID
         string GetID(void);
+
+	// This function return the object's Name
+	string GetName(void) const;
 
         // overloaded equality operator for Library pointers
         bool operator==(const Library &lib);

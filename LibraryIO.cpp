@@ -8,6 +8,7 @@
 #include "LibraryIO.h"
 #include "Date.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 void loadLib(vector<shared_ptr<Library> > &L) throw(const string) {
@@ -174,7 +175,7 @@ void saveLib(vector<shared_ptr<Library> > &L) {
     ofstream outfile(filename.c_str());
 
     for (unsigned int i = 0; i < L.size(); ++i)
-        outfile << L[i] << endl;
+        outfile << L[i];
 }
 
 void addMember(vector<shared_ptr<Library> > &L) {
@@ -334,11 +335,13 @@ void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetI
 }
 
 void makeReport(const vector<shared_ptr<Library> > &L) {
-    char choice; 
+    char choice;
+    Date today;
     do {
-        Date today; 
-        cout << "Enter today's date (MM/DD/YYYY): ";
-        cin >> today;
+        if (today.isNull()) { 
+            cout << "Enter today's date (MM/DD/YYYY): ";
+            cin >> today;
+	}
         cout << "Report Menu:\n";
         cout << "\t1) List overdue Assets\n";
         cout << "\t2) List members with overdue Assets\n";
@@ -355,7 +358,7 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
             case '2': 
                 overdueMemberList(L, today);
             case '3': 
-                areaCodeList(L); 
+	        areaCodeList(L, today); 
             case 'q':
                 break;
             default:
@@ -366,15 +369,16 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
 
 void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 {
-    cout << "\t\tOverdue Assets as of " << today << endl;
+    cout << "\n\t\tOverdue Assets as of " << today << endl << endl;
     // L.sort(dateSort())
     for (unsigned int i=0;i<L.size();i++) {//for each Lib object 
         vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
 
         for (unsigned int j=0; j<coDates.size(); j++) {// iterate through each due date for each object 
-            if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) // if it is an overdue book
-                L[i]->WriteOut(cout); // Write out the information 
-            else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
+	    if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) { // if it is an overdue book
+	        cout << "Days_Overdue: " << today - coDates[j] - 27 << endl;
+	        L[i]->WriteOut(cout); // Write out the information
+	    } else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
                 L[i]->WriteOut(cout); // Write out the information
         }
     }
@@ -384,7 +388,21 @@ void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
     return;
 }
 
-void areaCodeList (const vector<shared_ptr<Library> > &L) {
+void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
+{
+    string areaCode;
+    cout << "Enter 3-digit area code: ";
+    cin >> areaCode;
+    cout << "\n\tMembers in Area Code " << areaCode << " as of " << today << endl << endl;
+    cout << "ID    Name                  Phone\n";
+    cout << "----------------------------------------\n";
+
+    for (unsigned int i = 0; i < L.size(); i++)
+      if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(1, 3) == areaCode)
+	cout << L[i]->GetID() << "  " << setw(20) << setfill(' ') << L[i]->GetName() << "  " << L[i]->GetPhone() << endl;
+
+    cout << endl;
+
     return;
 }
 

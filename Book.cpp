@@ -118,7 +118,7 @@ void Book::WriteOut (ostream & output) {
     else
         output << "NONE";
 
-    output << endl;
+    output << endl << endl;
 }
 
 void Book::Add(shared_ptr<Library> member, Date checkoutDate, int number) {

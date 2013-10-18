@@ -104,8 +104,15 @@ void Library::WriteOut (ostream & output) {
     output << "ID: "   << ID   << endl;
 }
 
+string Library::GetPhone(void) const {
+}
+
 string Library::GetID(void) {
     return ID;
+}
+
+string Library::GetName(void) const {
+    return Name;
 }
 
 void Library::Add(shared_ptr<Library> lib, Date dueDate, int number) {
