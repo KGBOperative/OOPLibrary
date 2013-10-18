@@ -6,6 +6,7 @@
 // Contents: This file contains the description of a class called Date.
 
 #include <iostream>
+#include <ctime>
 
 #include "DateConversion.h"
 

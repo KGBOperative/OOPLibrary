@@ -101,9 +101,9 @@ bool Date::isNull(void) const {
 }
 
 Date Date::Today(void) {
-    time_t t = time();
+    time_t t = time(0);
     struct tm *now = localtime(&t);
-    return Date(now->tm_mon + 1, now->tm_day, now->tm_year + 1900);
+    return Date(now->tm_mon + 1, now->tm_mday, now->tm_year + 1900);
 }
 
 int Date::operator - (const Date & D) const {
