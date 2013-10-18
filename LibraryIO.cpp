@@ -81,7 +81,7 @@ shared_ptr<Library> readMember(istream &infile, map<string, vector<shared_ptr<CO
         
         if (iter == assets.end()) {
             debug << "coa = " << endl << *coa;
-            checkout[memberID].push_back(coa);
+            //checkout[memberID].push_back(coa);
         }
 
         else {
@@ -130,7 +130,7 @@ shared_ptr<Library> readPeriodical(istream &infile, map<string, vector<shared_pt
             auto assets = checkout[id];
             auto iter = find(assets.begin(), assets.end(), coa);
             
-            if (assets.size() < 1 || iter != assets.end()) {
+            if (assets.size() < 1 || iter == assets.end()) {
                 debug << "new coa = " << endl << *coa;
                 checkout[id].push_back(coa);
             }
@@ -163,7 +163,7 @@ shared_ptr<Library> readBook(istream &infile, map<string, vector<shared_ptr<COAs
         
         auto assets = checkout[id];
         auto iter = find(assets.begin(), assets.end(), *coa);
-        if (iter != assets.end()) {
+        if (iter == assets.end()) {
             debug << "new coa = " << endl << *coa;
             checkout[id].push_back(coa);
         }
@@ -411,7 +411,7 @@ void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 	        cout << "Days_Overdue: " << today - coDates[j] - 27 << endl;
 	        L[i]->WriteOut(cout); // Write out the information
 	    } else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
-                L[i]->WriteOut(cout); // Write out the information
+            L[i]->WriteOut(cout); // Write out the information
         }
     }
 }

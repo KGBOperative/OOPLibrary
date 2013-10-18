@@ -1,3 +1,13 @@
+Type: BOOK 
+Name: Fire in the Valley
+ID: B501
+Asset_Type: BIOGRAPHY
+Author: Paul Freiberger and Michael Swaine
+ISBN: 978-0071358927
+Type: NONFICTION
+Checked_Out_On: 09/13/2013
+Checked_Out_By: M101
+
 Type: PERIODICAL
 Name: Time
 ID: P502
@@ -12,16 +22,6 @@ Volume: 89      Number: 2
 Publication_Date: 01/12/2012
 Checked_Out_On: 00/00/0000
 Checked_Out_By: NONE
-
-Type: BOOK 
-Name: Fire in the Valley
-ID: B501
-Asset_Type: BIOGRAPHY
-Author: Paul Freiberger and Michael Swaine
-ISBN: 978-0071358927
-Type: NONFICTION
-Checked_Out_On: 09/13/2013
-Checked_Out_By: M101
 
 Type: MEMBER
 Name: Anne A. Student

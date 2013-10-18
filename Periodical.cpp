@@ -116,8 +116,10 @@ void Periodical::WriteOut (ostream & output)
 }
 
 void Periodical::Add(shared_ptr<Library> member, Date checkedOutDate, int number) {
-    Issues[number-1].CheckedOut = checkedOutDate;
-    Issues[number-1].CheckedOutBy = member;
+    if (number > 0) {
+        Issues[number-1].CheckedOut = checkedOutDate;
+        Issues[number-1].CheckedOutBy = member;
+    }
 }
 
 void Periodical::Remove(shared_ptr<Library> member, int number) {
