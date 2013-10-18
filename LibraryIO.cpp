@@ -367,13 +367,8 @@ void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetI
 
 void makeReport(const vector<shared_ptr<Library> > &L) {
     char choice;
-    Date today;
+    Date today = Date::Today();
     do {
-        if (today.isNull()) { 
-            cout << "Enter today's date (MM/DD/YYYY): ";
-            cin >> today;
-        }
-
         cout << "Report Menu:\n";
         cout << "\t1) List overdue Assets\n";
         cout << "\t2) List members with overdue Assets\n";
@@ -387,10 +382,13 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
         switch (choice) {
             case '1': 
                 overdueAssetList(L, today);
+		break;
             case '2': 
                 overdueMemberList(L, today);
+		break;
             case '3': 
-                areaCodeList(L, today); 
+                areaCodeList(L, today);
+		break;
             case 'q':
                 break;
             default:
@@ -423,6 +421,7 @@ void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
 void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
 {
     string areaCode;
+    vector<shared_ptr<Library> > areaMembers;
     cout << "Enter 3-digit area code: ";
     cin >> areaCode;
     cout << "\n\tMembers in Area Code " << areaCode << " as of " << today << endl << endl;
@@ -430,12 +429,31 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
     cout << "----------------------------------------\n";
 
     for (unsigned int i = 0; i < L.size(); i++)
-      if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(1, 3) == areaCode)
-	cout << L[i]->GetID() << "  " << setw(20) << setfill(' ') << L[i]->GetName() << "  " << L[i]->GetPhone() << endl;
+        if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(0, 3) == areaCode)
+	    areaMembers.push_back(L[i]);
+
+    sort(areaMembers.begin(), areaMembers.end(), IDSort);
+
+    for (unsigned int i = 0; i < areaMembers.size(); i++)
+        cout << areaMembers[i]->GetID() << "  " << setw(20) << setfill(' ') << left
+	     << areaMembers[i]->GetName() << "  " << areaMembers[i]->GetPhone() << endl;
 
     cout << endl;
 
     return;
+}
+
+bool IDSort (shared_ptr<Library> L1, shared_ptr<Library> L2)
+{
+    return *L1 < *L2;
+}
+
+bool OverdueSort (shared_ptr<Library> L1, shared_ptr<Library> L2)
+{
+  //int days1, days2;
+  //days1 = (L1->IsA() == Library::BOOK) ? (L1->  ) : (  ) 
+
+    return false;
 }
 
 #endif
