@@ -70,30 +70,31 @@ void Member::Remove(shared_ptr<Library> asset, int number) {
 }
 
 void Member::ReadIn(istream &input) {
-    while (input.good()) {
-        string field;
-        input >> field;
+    for (string line; input.good(); getline(input, line)) {
+        int i = line.find(" ");
+        string fieldName = line.substr(0, i);
+        string fieldData = line.substr(i+1);
 
-        if (field == "Name:")
-            getline(input, Name);
+        if (fieldName == "Name:")
+            Name = fieldData;
 
-        else if (field == "ID:")
-            input >> ID;
+        else if (fieldName == "ID:")
+            ID = fieldData;
 
-        else if (field == "Address:")
-            getline(input, address);
+        else if (fieldName == "Address:")
+            address = fieldData;
 
-        else if (field == "City:")
-            getline(input, city);
+        else if (fieldName == "City:")
+            city = fieldData;
 
-        else if (field == "State:")
-            getline(input, state);
+        else if (fieldName == "State:")
+            state = fieldData;
 
-        else if (field == "Zip:")
-            getline(input, zip);
+        else if (fieldName == "Zip:")
+            zip = fieldData;
 
-        else if (field == "Phone_Number:") {
-            getline(input, phone);
+        else if (fieldName == "Phone_Number:") {
+            phone = fieldData;
             return;
         }
     }
