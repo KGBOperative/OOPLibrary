@@ -62,6 +62,9 @@ class Date
         // This accessor function checks whether the date is void
         bool isNull(void) const;
 
+        // This static function returns today's date
+        static Date Today(void);
+
         // This subtraction operator retuns the difference in days between the
         // caller and the passed object.
         int operator - (const Date & D) const;

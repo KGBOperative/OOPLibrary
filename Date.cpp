@@ -100,6 +100,12 @@ bool Date::isNull(void) const {
     return (day == -1 || month == -1 || year == -1) ? true : false;
 }
 
+Date Date::Today(void) {
+    time_t t = time();
+    struct tm *now = localtime(&t);
+    return Date(now->tm_mon + 1, now->tm_day, now->tm_year + 1900);
+}
+
 int Date::operator - (const Date & D) const {
     return isNull() ? julian_days(D.year, D.month, D.day) : julian_days(year, month, day) - julian_days(D.year, D.month, D.day);
 }
