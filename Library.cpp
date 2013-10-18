@@ -105,6 +105,7 @@ void Library::WriteOut (ostream & output) {
 }
 
 string Library::GetPhone(void) const {
+    return "";
 }
 
 string Library::GetID(void) {

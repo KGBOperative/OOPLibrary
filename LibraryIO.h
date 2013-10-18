@@ -64,11 +64,11 @@ struct COAsset {
     }
 
     // overloaded output operator for COAsset
-    inline friend ostream & operator<<(ostream &output, const shared_ptr<COAsset> coa) {
-        output << "assetID = " << coa->assetID << endl;
-        output << "coBy = " << coa->coBy << endl;
-        output << "coDate = " << coa->coDate << endl;
-        output << "issueNum = " << coa->issueNum << endl;
+    inline friend ostream & operator<<(ostream &output, const COAsset &coa) {
+        output << "assetID = " << coa.assetID << endl;
+        output << "coBy = " << coa.coBy << endl;
+        output << "coDate = " << coa.coDate << endl;
+        output << "issueNum = " << coa.issueNum << endl;
 
         return output;
     }
@@ -98,25 +98,28 @@ void saveLib(vector<shared_ptr<Library> > &L);
 void addMember(vector<shared_ptr<Library> > &L);
 
 // function to read in and create a member from input stream
-shared_ptr<Library> readMember(istream &input);
+shared_ptr<Library> readMember(istream &infile, map<string, vector<shared_ptr<COAsset> > > &checkout);
 
 // function to allow the user to manually add an asset, (book or periodical)
 void addAsset(vector<shared_ptr<Library> > &L);
 
 // function to read in and create a periodical asset from input stream
-shared_ptr<Library> readPeriodical(istream &input);
+shared_ptr<Library> readPeriodical(istream &infile, map<string, vector<shared_ptr<COAsset> > > &checkout);
 
 // function to read in and create a book asset from input stream
-shared_ptr<Library> readBook(istream &input);
+shared_ptr<Library> readBook(istream &infile, map<string, vector<shared_ptr<COAsset> > > &checkout);
+
+// function to connect Members and Assets from the map of member and asset IDs
+void checkoutAll(vector<shared_ptr<Library> > &L, map<string, vector<shared_ptr<COAsset> > > &m);
 
 // function to allow the user to manually remove an item from the library
 void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string);
 
 // function to check out an asset to a member
-void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, string date) throw(const string);
+void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, Date date, int number = 0) throw(const string);
 
 // function currently does not do anything
-void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID) throw(const string);
+void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, int number = 0) throw(const string);
 
 // function to create a report from the given library
 void makeReport(const vector<shared_ptr<Library> > &L);
@@ -125,8 +128,7 @@ void makeReport(const vector<shared_ptr<Library> > &L);
 void overdueAssetList(const vector<shared_ptr<Library> > &L, Date & today);
 
 // Creates a report of members with overdue assets as well as the assets that are overdue for each member
-void overdueMemberList(const vector<shared_ptr<Library> > &L, 
-		       const Date today);
+void overdueMemberList(const vector<shared_ptr<Library> > &L, const Date today);
 
 // Creats a report of members in a specific area code
 void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today);

@@ -83,6 +83,7 @@ int main() {
                 break;
             }
             case '7': {
+                int issue;
                 string memberID, assetID, date;
                 cout << "Enter the ID of the Card Holder: ";
                 cin >> memberID;
@@ -90,9 +91,11 @@ int main() {
                 cin >> assetID;
                 cout << "Enter the checkout date: ";
                 cin >> date;
+                cout << "Enter the number of the Issue to check out (0 if N/A): ";
+                cin >> issue;
 
                 try {
-                    checkoutAsset(L, memberID, assetID, date);
+                    checkoutAsset(L, memberID, assetID, date, issue);
                 } catch (const char* e) {
                     cout << "Error: " << e << endl;
                 }
