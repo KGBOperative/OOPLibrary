@@ -29,9 +29,12 @@ class Member: public Library
         // This assignment operator will copy one object to another of the same type.
         Member &  operator = (const Member & m);
 
-	// This accessor returns the phone number of the member
-	string GetPhone () const;
+        // This accessor returns the phone number of the member
+        string GetPhone () const;
         
+        // This accessor returns the list of Assets that Member has checked out
+        vector<shared_ptr<Library> > GetCheckedOut(void) const;
+
         // Reads in the state of the current Member from the record file
         void ReadIn (istream & input);
         

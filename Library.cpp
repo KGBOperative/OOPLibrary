@@ -80,6 +80,10 @@ vector<Date> Library::GetCheckoutDates (void) const {
     return vector<Date>();
 }
 
+vector<shared_ptr<Library> > Library::GetCheckedoutBy(void) const {
+    return vector<shared_ptr<Library> >();
+}
+
 void Library::CheckOut (shared_ptr<Library>member, shared_ptr<Library>asset, Date date, int number) {
     member->Add(asset, date, number);
     asset->Add(member, date, number);
@@ -106,6 +110,10 @@ void Library::WriteOut (ostream & output) {
 
 string Library::GetPhone(void) const {
     return "";
+}
+
+vector<shared_ptr<Library> > GetCheckedOut (void) const {
+    return vector<shared_ptr<Library> >();
 }
 
 vector<Date> Library::GetDueDates (void)

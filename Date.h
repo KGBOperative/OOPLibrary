@@ -79,8 +79,11 @@ class Date
         // the passed Date.
         bool operator > (const Date & D) const;
 
+        // This equality operator returns true if the Dates are the same date
+        bool operator == (const Date & D) const;
+
         // This overloaded addition operator adds the number of day given to the Date
-        Date operator+(int days);
+        Date operator + (int days);
 
         // This input operator sets the values of the passed Date object
         // according to the input mm/dd/yyyy.

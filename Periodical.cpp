@@ -62,6 +62,16 @@ vector<Date> Periodical::GetDueDates (void) {
     return dueDates;
 }
 
+vector<shared_ptr<Library> > GetCheckedoutBy(void) const {
+    vector<shared_ptr<Library> > coBy(Issues.size(), NULL);
+
+    for (unsigned int i = 0; i < Issues.size(); ++i) 
+        if (Issues[i].CheckedOutBy != NULL)
+            coBy[i] = Issues[i].CheckedOutBy;
+
+    return coBy;
+}
+
 void Periodical::AddIssue(int volume, int volNum, string pubDate) {
     Issue issue;
     issue.Volume = volume;

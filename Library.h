@@ -55,6 +55,9 @@ class Library
         // This function returns the checkout dates for all checked out items
         virtual vector<Date> GetCheckoutDates (void) const;
 
+        // This function returns the Members that have an asset checked out
+        vector<shared_ptr<Library> > GetCheckedoutBy (void) const;
+
         // This function will only be implemented by Periodical
         virtual void AddIssue(int volume, int number, string pubDate);
 
@@ -64,11 +67,14 @@ class Library
         // This function will be used be the child classes to write out object state data to a report file
         virtual void WriteOut (ostream & output);
 
-	// This function will return a phone number - only used by Member
-	virtual string GetPhone (void) const;
+        // This function will return a phone number - only used by Member
+        virtual string GetPhone (void) const;
 
-	// This function wiill return a vector with the due dates of the object
-	virtual vector<Date> GetDueDates (void);
+        // This function will return the list of Assets checked out - only used by Member
+        virtual vector<shared_ptr<Library> > GetCheckedout (void) const;
+
+        // This function wiill return a vector with the due dates of the object
+        virtual vector<Date> GetDueDates (void);
 
         // This function checks out the asset to the member given
         static void CheckOut (shared_ptr<Library> member, shared_ptr<Library> asset, Date date, int number = 0);

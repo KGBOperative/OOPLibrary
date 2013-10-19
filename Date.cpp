@@ -147,6 +147,10 @@ bool Date::operator > (const Date & D) const {
         return D.IsNull() ? false : true;
 }
 
+bool Date::operator == (const Date & D) const {
+    return julian_date(year, month, day) == julian_date(D.year, D.month, D.day);
+}
+
 istream & operator >> (istream & ins, Date & D) {
     ins >> D.month;
     ins.ignore();

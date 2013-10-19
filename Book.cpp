@@ -66,6 +66,10 @@ vector<Date> Book::GetDueDates (void) {
         return vector<Date>(1, CheckedOut);
 }
 
+vector<shared_ptr<Library> > Book::GetCheckedoutBy(void) const {
+    return vector<shared_ptr<Library> >(1, CheckedOutBy);
+}
+
 void Book::ReadIn (istream & input) {
     for (string line; input.good(); getline(input, line)) {
         int i = line.find(" ");

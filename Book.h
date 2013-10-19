@@ -13,8 +13,7 @@
 
 using namespace std;
 
-class Book : public Asset
-{
+class Book : public Asset {
     public:
         // Enumerated type for Book Classification
         enum BookType {FICTION, NONFICTION};
@@ -39,8 +38,11 @@ class Book : public Asset
         // This function returns the checkOut date of the Book
         vector<Date> GetCheckoutDates(void) const;
 
-	// This function returns a vector that contains the due date of the Book.
-	vector<Date> GetDueDates (void);
+        // This function returns a vector that contains the due date of the Book.
+        vector<Date> GetDueDates (void);
+
+        // This function returns the pointer to the Member that has thid Book checked out
+        vector<shared_ptr<Library> > GetCheckedoutBy(void) const;
 
         // This function reads the state of the Book object from input.
         void ReadIn (istream & input);

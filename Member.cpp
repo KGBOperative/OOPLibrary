@@ -56,6 +56,10 @@ string Member::GetPhone () const
     return phone;
 }
 
+vector<shared_ptr<Library> > Member::GetCheckedOut(void) const {
+    return checkedOut;
+}
+
 void Member::Add(shared_ptr<Library> asset, Date date, int number) {
     checkedOut.push_back(asset);
 }
