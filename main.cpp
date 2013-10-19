@@ -114,7 +114,7 @@ int main() {
 
 
                 try {
-                    returnAsset(L, memberID, assetID);
+                    returnAsset(L, memberID, assetID, issue);
                 } catch (const string e) {
                     cout << "Error: " << e << endl;
                 }

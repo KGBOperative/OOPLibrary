@@ -343,9 +343,10 @@ void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string asse
     }
 }
 
-void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, int number) throw(const string) {
+void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, int number = 0) throw(const string) {
     int member = -1;
     int asset = -1;
+    
     for (unsigned int i = 0; i < L.size() && (member < 0 || asset < 0); ++i) {
         if (*L[i] == memberID)
             member = i;
