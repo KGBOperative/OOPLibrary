@@ -141,6 +141,6 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today);
 bool IDSort (shared_ptr<Library> L1, shared_ptr<Library> L2);
 
 // This function compares library pointers based on days overdue
-bool OverdueSort (shared_ptr<Library> L1, shared_ptr<Library> L2);
+bool OverdueSort (shared_ptr<COAsset> L1, shared_ptr<COAsset> L2);
 
 #endif  // LIBRARYIO_H

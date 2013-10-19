@@ -448,12 +448,9 @@ bool IDSort (shared_ptr<Library> L1, shared_ptr<Library> L2)
     return *L1 < *L2;
 }
 
-bool OverdueSort (shared_ptr<Library> L1, shared_ptr<Library> L2)
+bool OverdueSort (shared_ptr<COAsset> A1, shared_ptr<COAsset> A2)
 {
-  //int days1, days2;
-  //days1 = (L1->IsA() == Library::BOOK) ? (L1->  ) : (  ) 
-
-    return false;
+    return A1->coDate < A2->coDate;
 }
 
 #endif
