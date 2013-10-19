@@ -13,6 +13,9 @@ using namespace std;
 // outputs the menu options to the terminal and reads in the user selection
 char mainMenu(void) {
 	char choice;
+
+	cout << "\nMain Menu:\n";
+	cout <<   "----------\n";
 	cout << "1) Restore Library Information from a File\n";
 	cout << "2) Save Library Information to a File\n";
 	cout << "3) Add Library Card Holder\n";
@@ -23,7 +26,7 @@ char mainMenu(void) {
 	cout << "8) Return Asset from Card Holder\n";
 	cout << "9) Generate Reports\n";
 	cout << "q) Quit\n";
-    cout << "Select option: ";
+        cout << "\nSelect option: ";
 	cin >> choice; 
 	return tolower(choice);
 }

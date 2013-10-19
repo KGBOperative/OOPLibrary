@@ -118,7 +118,9 @@ shared_ptr<Library> readBook(istream &infile, map<string, vector<shared_ptr<COAs
 // function to connect Members and Assets from the map of member and asset IDs
 void checkoutAll(vector<shared_ptr<Library> > &L, map<string, vector<shared_ptr<COAsset> > > &m);
 
-// function to allow the user to manually remove an item from the library
+// Function to allow the user to manually remove an item from the library. All assets
+// are returned before deletion of either member or asset, so no relationships are
+// shown between objects that no longer exist.
 void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string);
 
 // function to check out an asset to a member

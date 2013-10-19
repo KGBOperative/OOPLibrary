@@ -513,7 +513,7 @@ void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
     }
 
     cout << "\n\tMembers With Overdue Assets as of " << today << ":\n";
-    cout <<   "\t---------------------------------------------\n\n";
+    cout << "\t---------------------------------------------\n\n";
 
     for (unsigned int i = 0; i < delinquents.size(); i++) {
         cout << delinquents[i];
@@ -548,7 +548,6 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
     cout << "\n\tMembers in Area Code " << areaCode << " as of " << today << endl;
     cout << "\t-----------------------------------------\n\n";
     cout << "ID      Name                       Phone\n";
-    //    cout << "----------------------------------------\n";
 
     for (unsigned int i = 0; i < L.size(); i++)
         if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(0, 3) == areaCode)
