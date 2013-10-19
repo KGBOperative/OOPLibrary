@@ -148,7 +148,7 @@ bool Date::operator > (const Date & D) const {
 }
 
 bool Date::operator == (const Date & D) const {
-    return julian_date(year, month, day) == julian_date(D.year, D.month, D.day);
+    return julian_days(year, month, day) == julian_days(D.year, D.month, D.day);
 }
 
 istream & operator >> (istream & ins, Date & D) {

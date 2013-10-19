@@ -49,7 +49,7 @@ class Periodical : public Asset
         vector<Date> GetDueDates (void);
 
         // This function returns the list of Members that have Issues checked out
-        vector<shared_ptr<Library> > GetCheckoutBy(void) const;
+        vector<shared_ptr<Library> > GetCheckedoutBy(void) const;
 
         // This function adds an issue to the periodical
         void AddIssue(int volume, int volNum, string pubDate);

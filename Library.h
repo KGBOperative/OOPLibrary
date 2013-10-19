@@ -71,7 +71,7 @@ class Library
         virtual string GetPhone (void) const;
 
         // This function will return the list of Assets checked out - only used by Member
-        virtual vector<shared_ptr<Library> > GetCheckedout (void) const;
+        virtual vector<shared_ptr<Library> > GetCheckedOut (void) const;
 
         // This function wiill return a vector with the due dates of the object
         virtual vector<Date> GetDueDates (void);

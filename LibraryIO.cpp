@@ -415,7 +415,45 @@ void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 }
 
 void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today) {
-    return;
+    vector<shared_ptr<Library> > delinquents;
+
+    for (unsigned int i = 0; i < L.size(); i++) {
+        if (L[i]->IsA() == Library::MEMBER) {
+	    vector <shared_ptr<Library> > checkedOut = L[i]->GetCheckedOut();
+
+	    for (unsigned int j = 0; j < checkedOut.size(); j++) {
+	        vector<Date> dueDates = checkedOut[j]->GetDueDates();
+
+	        for (unsigned int k = 0; k < dueDates.size(); k++)
+		    if (dueDates[k] < today) {
+		        delinquents.push_back(L[i]);
+		        break;
+		    }
+	    }
+        }
+    }
+
+    for (unsigned int i = 0; i < delinquents.size(); i++) {
+        cout << delinquents[i];
+	cout << "\tAssets Overdue:" << endl;
+
+	vector <shared_ptr<Library> > checkedOut = delinquents[i]->GetCheckedOut();
+
+	for (unsigned int j = 0; j < checkedOut.size(); j++) {
+	    vector<Date> dueDates = checkedOut[j]->GetDueDates();
+
+	    for (unsigned int k = 0; k < dueDates.size(); k++)
+	        if (dueDates[k] < today) {
+	            cout << "\tDays Overdue: " << today - dueDates[k] << ": "
+			 << checkedOut[j]->GetID() << ": " << checkedOut[j]->GetName();
+		    if (checkedOut[j]->IsA() == Library::PERIODICAL)
+		        cout << "N" << k + 1 << endl;
+		    else cout << endl;
+		}
+	}
+
+	cout << endl;
+    }
 }
 
 void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)

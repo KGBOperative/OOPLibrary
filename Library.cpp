@@ -112,7 +112,7 @@ string Library::GetPhone(void) const {
     return "";
 }
 
-vector<shared_ptr<Library> > GetCheckedOut (void) const {
+vector<shared_ptr<Library> > Library::GetCheckedOut (void) const {
     return vector<shared_ptr<Library> >();
 }
 
