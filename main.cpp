@@ -103,11 +103,15 @@ int main() {
                 break;
             }
             case '8': {
+                int issue;
                 string memberID, assetID;
                 cout << "Enter the ID of the Card Holder: ";
                 cin >> memberID;
                 cout << "Enter the ID of the Asset to return: ";
                 cin >> assetID;
+                cout << "Enter the number of the Issue to check out (0 if N/A): ";
+                cin >> issue;
+
 
                 try {
                     returnAsset(L, memberID, assetID);

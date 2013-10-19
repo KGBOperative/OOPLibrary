@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <ctime>
+#include <tr1/tuple>
 
 #include "DateConversion.h"
 
@@ -61,7 +62,7 @@ class Date
         void SetNull(void);
 
         // This accessor function checks whether the date is void
-        bool isNull(void) const;
+        bool IsNull(void) const;
 
         // This static function returns today's date
         static Date Today(void);
@@ -77,6 +78,9 @@ class Date
         // This greater-than operator returns true if the calling Date is after
         // the passed Date.
         bool operator > (const Date & D) const;
+
+        // This overloaded addition operator adds the number of day given to the Date
+        Date operator+(int days);
 
         // This input operator sets the values of the passed Date object
         // according to the input mm/dd/yyyy.
