@@ -237,12 +237,24 @@ void addMember(vector<shared_ptr<Library> > &L) {
 void removeItem(vector<shared_ptr<Library> > &L, string id) throw(const string)  {
     for (unsigned int i = 0; i < L.size(); ++i) {
         if (*L[i] == id) {
-            auto checkedout = L[i]->GetCheckedOut();
-            for (unsigned int j = 0; j < checkedout.size(); ++j) {
-                auto coBy = checkedout[j]->GetCheckedoutBy();
+            if (L[i]->IsA() == Library::MEMBER) {
+                auto checkedout = L[i]->GetCheckedOut();
+                for (unsigned int j = 0; j < checkedout.size(); ++j) {
+                    auto coBy = checkedout[j]->GetCheckedoutBy();
+                    for (unsigned int k = 0; k < coBy.size(); ++k) {
+                        if (NULL != coBy[k] && coBy[k]->GetID() == L[i]->GetID()) {
+                            Library::Return(L[i], checkedout[j], k + 1);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            else {
+                auto coBy = L[i]->GetCheckedoutBy();
                 for (unsigned int k = 0; k < coBy.size(); ++k) {
-                    if (NULL != coBy[k] && coBy[k]->GetID() == L[i]->GetID()) {
-                        Library::Return(L[i], checkedout[j], k + 1);
+                    if (NULL != coBy[k]) {
+                        Library::Return(coBy[k], L[i], k + 1);
                         break;
                     }
                 }

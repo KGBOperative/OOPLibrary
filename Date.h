@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <ctime>
-#include <tr1/tuple>
 
 #include "DateConversion.h"
 

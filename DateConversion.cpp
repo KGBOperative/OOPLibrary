@@ -16,7 +16,7 @@ int julian_days(int year, int month, int day) {
 }
 
 int* julian_to_date(int year, int mo, int day) {
-    int day_of_year = julian_days(year, mo, day) - julian_days(year, 1, 0);
+    int day_of_year = julian_days(year, mo, day) - julian_days(year, 0, 0);
     static const int month_len[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     int leap = (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
@@ -34,7 +34,7 @@ int* julian_to_date(int year, int mo, int day) {
     int *date = new int[3];
     date[0] = year;
     date[1] = month;
-    date[2] = day;
+    date[2] = day_of_month;
 
     return date;
 }
