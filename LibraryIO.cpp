@@ -343,7 +343,7 @@ void checkoutAsset(vector<shared_ptr<Library> > &L, string memberID, string asse
     }
 }
 
-void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, int number = 0) throw(const string) {
+void returnAsset(vector<shared_ptr<Library> > &L, string memberID, string assetID, int number) throw(const string) {
     int member = -1;
     int asset = -1;
     
