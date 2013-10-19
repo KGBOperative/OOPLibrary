@@ -115,6 +115,6 @@ void Member::WriteOut(ostream &output) {
         output << " " << checkedOut[i]->GetID();
     }
 
-    output << endl;
+    output << endl << endl;
 }
 

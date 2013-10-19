@@ -1,6 +1,6 @@
 #!/bin/bash
 make
-echo "1 studentP1.lib 2 test.lib q" | main.out
+echo "1 big.lib 2 test.lib q" | main.out
 echo
 cat test.lib
 exit 0

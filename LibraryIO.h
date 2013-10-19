@@ -58,8 +58,12 @@ struct COAsset {
     }
 
     inline bool operator==(const COAsset &coa) {
-        if (assetID == coa.assetID)
-            return issueNum == coa.issueNum;
+        if (assetID == coa.assetID) {
+            if ((issueNum != 0 && coa.issueNum == 0) || (issueNum == 0 && coa.issueNum != 0))
+                return true;
+            else 
+                return issueNum == coa.issueNum;
+        }
         return false;
     }
 
