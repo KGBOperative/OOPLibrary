@@ -369,11 +369,12 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
     char choice;
     Date today = Date::Today();
     do {
-        cout << "Report Menu:\n";
+        cout << "\nReport Menu:\n";
+	cout << "------------\n";
         cout << "\t1) List overdue Assets\n";
         cout << "\t2) List members with overdue Assets\n";
         cout << "\t3) List members in a specified area code\n";
-        cout << "\tq) Quit\n";
+        cout << "\tq) Quit\n\n";
         cout << "Selection: ";
         
         cin >> choice; 
@@ -399,8 +400,8 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
 
 void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 {
-    cout << "Overdue Assets:\n\n";
-
+    cout << "\n\t\tOverdue Assets as of " << today << endl << endl;
+    
     vector<shared_ptr<COAsset> > coAssets;
 
     for (unsigned int i = 0; i < L.size(); ++i) {
@@ -481,15 +482,20 @@ void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
 	        for (unsigned int k = 0; k < dueDates.size(); k++)
 		    if (dueDates[k] < today) {
 		        delinquents.push_back(L[i]);
-		        break;
+		        goto keepGoing;
 		    }
 	    }
         }
+        keepGoing: continue;
     }
+
+    cout << "\n\tMembers With Overdue Assets as of " << today << ":\n";
+    cout <<   "\t---------------------------------------------\n\n";
 
     for (unsigned int i = 0; i < delinquents.size(); i++) {
         cout << delinquents[i];
-	cout << "\tAssets Overdue:" << endl;
+	cout << "\tAssets Overdue:\n";
+	cout << "\t---------------\n";
 
 	vector <shared_ptr<Library> > checkedOut = delinquents[i]->GetCheckedOut();
 
@@ -497,16 +503,16 @@ void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today)
 	    vector<Date> dueDates = checkedOut[j]->GetDueDates();
 
 	    for (unsigned int k = 0; k < dueDates.size(); k++)
-	        if (dueDates[k] < today) {
-	            cout << "\tDays Overdue: " << today - dueDates[k] << ": "
+	        if (dueDates[k] < today && !dueDates[k].IsNull()) {
+		    cout << "\tDays Overdue: " << setw(4) << setfill(' ') << today - dueDates[k] << ": "
 			 << checkedOut[j]->GetID() << ": " << checkedOut[j]->GetName();
 		    if (checkedOut[j]->IsA() == Library::PERIODICAL)
-		        cout << "N" << k + 1 << endl;
+		        cout << ", No. " << k + 1 << endl;
 		    else cout << endl;
 		}
 	}
 
-	cout << endl;
+	cout << endl << endl;
     }
 }
 
@@ -516,9 +522,10 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
     vector<shared_ptr<Library> > areaMembers;
     cout << "Enter 3-digit area code: ";
     cin >> areaCode;
-    cout << "\n\tMembers in Area Code " << areaCode << " as of " << today << endl << endl;
-    cout << "ID    Name                  Phone\n";
-    cout << "----------------------------------------\n";
+    cout << "\n\tMembers in Area Code " << areaCode << " as of " << today << endl;
+    cout << "\t-----------------------------------------\n\n";
+    cout << "ID      Name                       Phone\n";
+    //    cout << "----------------------------------------\n";
 
     for (unsigned int i = 0; i < L.size(); i++)
         if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(0, 3) == areaCode)
@@ -527,8 +534,8 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
     sort(areaMembers.begin(), areaMembers.end(), IDSort);
 
     for (unsigned int i = 0; i < areaMembers.size(); i++)
-        cout << areaMembers[i]->GetID() << "  " << setw(20) << setfill(' ') << left
-         << areaMembers[i]->GetName() << "  " << areaMembers[i]->GetPhone() << endl;
+        cout << areaMembers[i]->GetID() << "\t" << setw(25) << setfill(' ') << left
+	     << areaMembers[i]->GetName() << "  " << areaMembers[i]->GetPhone() << endl;
 
     cout << endl;
 

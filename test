@@ -1,6 +1,10 @@
 #!/bin/bash
 make
+<<<<<<< Updated upstream
 echo "1 big.lib 9 1 q" | main.out
 echo
 # cat test.lib
+=======
+echo "1 big.lib" | ./main.out
+>>>>>>> Stashed changes
 exit 0
