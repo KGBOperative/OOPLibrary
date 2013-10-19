@@ -400,7 +400,7 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
 void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 {
     cout << "\n\t\tOverdue Assets as of " << today << endl << endl;
-    // L.sort(dateSort())
+
     for (unsigned int i=0;i<L.size();i++) {//for each Lib object 
         vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
         
@@ -409,7 +409,7 @@ void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 	        cout << "Days_Overdue: " << today - coDates[j] - 27 << endl;
 	        L[i]->WriteOut(cout); // Write out the information
 	    } else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
-            L[i]->WriteOut(cout); // Write out the information
+                L[i]->WriteOut(cout); // Write out the information
         }
     }
 }

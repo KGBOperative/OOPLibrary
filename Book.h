@@ -39,6 +39,9 @@ class Book : public Asset
         // This function returns the checkOut date of the Book
         vector<Date> GetCheckoutDates(void) const;
 
+	// This function returns a vector that contains the due date of the Book.
+	vector<Date> GetDueDates (void);
+
         // This function reads the state of the Book object from input.
         void ReadIn (istream & input);
 

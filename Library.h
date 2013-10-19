@@ -67,6 +67,9 @@ class Library
 	// This function will return a phone number - only used by Member
 	virtual string GetPhone (void) const;
 
+	// This function wiill return a vector with the due dates of the object
+	virtual vector<Date> GetDueDates (void);
+
         // This function checks out the asset to the member given
         static void CheckOut (shared_ptr<Library> member, shared_ptr<Library> asset, Date date, int number = 0);
 

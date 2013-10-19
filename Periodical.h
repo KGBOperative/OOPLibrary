@@ -45,6 +45,9 @@ class Periodical : public Asset
         // This function returns the checkout dates for all issues (00/00/00 if not checked out)
         vector<Date> GetCheckoutDates(void) const;
 
+	// This function returns the due dates for all issues
+	vector<Date> GetDueDates (void);
+
         // This function adds an issue to the periodical
         void AddIssue(int volume, int volNum, string pubDate);
 

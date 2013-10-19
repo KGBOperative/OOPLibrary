@@ -59,6 +59,13 @@ vector<Date> Book::GetCheckoutDates(void) const {
     return vector<Date>(1, CheckedOut);
 }
 
+vector<Date> Book::GetDueDates (void) {
+    if (!CheckedOut.IsNull())
+      return vector<Date>(1, CheckedOut + 27);
+    else
+        return vector<Date>(1, CheckedOut);
+}
+
 void Book::ReadIn (istream & input) {
     for (string line; input.good(); getline(input, line)) {
         int i = line.find(" ");

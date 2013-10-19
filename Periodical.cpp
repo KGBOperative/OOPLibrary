@@ -49,6 +49,19 @@ vector<Date> Periodical::GetCheckoutDates(void) const {
     return coDates;
 }
 
+vector<Date> Periodical::GetDueDates (void) {
+    vector<Date> dueDates;
+    
+    for (unsigned int i = 0; i < Issues.size(); ++i) {
+        if (!Issues[i].CheckedOut.IsNull())
+            dueDates.push_back(Issues[i].CheckedOut + 11);
+	else
+	    dueDates.push_back(Issues[i].CheckedOut);
+    }
+
+    return dueDates;
+}
+
 void Periodical::AddIssue(int volume, int volNum, string pubDate) {
     Issue issue;
     issue.Volume = volume;

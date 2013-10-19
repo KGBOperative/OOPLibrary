@@ -108,6 +108,11 @@ string Library::GetPhone(void) const {
     return "";
 }
 
+vector<Date> Library::GetDueDates (void)
+{
+    return vector<Date>();
+}
+
 string Library::GetID(void) {
     return ID;
 }
