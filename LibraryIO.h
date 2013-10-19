@@ -37,7 +37,6 @@ template<class T, class U> inline bool operator==(const shared_ptr<T> lhs, const
     return *lhs == rhs;
 }
 
-// lessthan with one shared_ptr
 template<class T, class U> inline bool operator<(const shared_ptr<T> lhs, const U &rhs) {
     return *lhs < rhs;
 }
@@ -46,6 +45,7 @@ template<class T, class U> inline bool operator<(const shared_ptr<T> lhs, const 
 struct COAsset {
     // Constructor
     inline COAsset(void) {
+        assetName = "";
         assetID = "";
         coBy = "";
         coDate = Date("00/00/00");
@@ -77,17 +77,19 @@ struct COAsset {
         return output;
     }
 
-    // ID of the asset being checked out
+    // Name of the asset that is checked out
+    string assetName;
+    // ID of the asset that is checked out
     string assetID;
     // who checked-out the asset
     string coBy;
     // checkout date
     Date coDate;
-    // issue num; -1 if asset is not a periodical
+    // issue num; 0 if asset is not a periodical
     int issueNum;
 };
 
-// function to sort a COAsset vector by the date
+// function to a COAsset vector by the date
 inline bool sortByDate(const COAsset &lhs, const COAsset &rhs) {
     return lhs.coDate < rhs.coDate;
 }

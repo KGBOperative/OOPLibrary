@@ -81,6 +81,7 @@ vector<Date> Library::GetCheckoutDates (void) const {
 }
 
 vector<shared_ptr<Library> > Library::GetCheckedoutBy(void) const {
+    debug << "Library::GetCheckedoutBy()\n";
     return vector<shared_ptr<Library> >();
 }
 

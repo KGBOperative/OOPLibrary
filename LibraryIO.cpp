@@ -382,13 +382,13 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
         switch (choice) {
             case '1': 
                 overdueAssetList(L, today);
-		break;
+        break;
             case '2': 
                 overdueMemberList(L, today);
-		break;
+        break;
             case '3': 
                 areaCodeList(L, today);
-		break;
+        break;
             case 'q':
                 break;
             default:
@@ -399,19 +399,73 @@ void makeReport(const vector<shared_ptr<Library> > &L) {
 
 void overdueAssetList(const vector<shared_ptr<Library> >&L, Date & today)
 {
-    cout << "\n\t\tOverdue Assets as of " << today << endl << endl;
+    cout << "Overdue Assets:\n\n";
 
-    for (unsigned int i=0;i<L.size();i++) {//for each Lib object 
-        vector<Date> coDates = L[i]->GetCheckoutDates(); // Get the checkout dates for each object
+    vector<shared_ptr<COAsset> > coAssets;
+
+    for (unsigned int i = 0; i < L.size(); ++i) {
+        debug << "did it crash on " << L[i]->GetID() << "?\n";
+
+        if (L[i]->IsA() == Library::MEMBER)
+            continue;
+
+        vector<Date> dates = L[i]->GetDueDates();
+        vector<shared_ptr<Library> > coBy = L[i]->GetCheckedoutBy();
         
-        for (unsigned int j=0; j<coDates.size(); j++) {// iterate through each due date for each object 
-	    if (L[i]->IsA() == Library::BOOK && today - coDates[j] > 27) { // if it is an overdue book
-	        cout << "Days_Overdue: " << today - coDates[j] - 27 << endl;
-	        L[i]->WriteOut(cout); // Write out the information
-	    } else if (L[i]->IsA() == Library::PERIODICAL && today - coDates[j] > 11) // if it is an overdue peri
-                L[i]->WriteOut(cout); // Write out the information
+        debug << "does " << dates.size() << " == " << coBy.size() << "?\n";
+        for (unsigned int j = 0; j < dates.size(); ++j) {
+            if (NULL == coBy[j]) {
+                debug << "WTF, why is this NULL?!\n";
+                continue;
+            }
+
+            else
+                debug << coBy[j]->GetID() << " is not NULL\n";
+
+            if (!dates[j].IsNull() && dates[j] < today) {
+                shared_ptr<COAsset> coa(new COAsset);
+                coa->assetName = L[i]->GetName();
+                coa->assetID = L[i]->GetID();
+                coa->coDate = dates[j];
+                coa->coBy = coBy[j]->GetID();
+                
+                if (L[i]->IsA() == Library::PERIODICAL) 
+                    coa->issueNum = j + 1;
+
+                coAssets.push_back(coa);
+                debug << coa->coBy << endl;
+            }
         }
     }
+
+    sort(coAssets.begin(), coAssets.end(), OverdueSort);
+
+    int totalOverdueDays = 0;
+    for (unsigned int i = 0; i < coAssets.size(); ++i) {
+        int daysOverdue = today - coAssets[i]->coDate;
+
+        if (coAssets[i]->assetID[0] == 'P') {
+            cout << "Type: " << "PERIODICAL" << endl;
+            cout << "Asset_ID: " << coAssets[i]->assetID << endl;
+            cout << "Asset_Name: " << coAssets[i]->assetName << endl;
+            cout << "Issue_Number: " << coAssets[i]->issueNum << endl;
+            cout << "Checked_Out_By: " << coAssets[i]->coBy << endl;
+            cout << "Days_Overdue: " << daysOverdue << endl << endl;
+        }
+
+        else {
+            cout << "Type: " << "BOOK" << endl;
+            cout << "Asset_ID: " << coAssets[i]->assetID << endl;
+            cout << "Asset_Name: " << coAssets[i]->assetName << endl;
+            cout << "Checked_Out_By: " << coAssets[i]->coBy << endl;
+            cout << "Days_Overdue: " << daysOverdue << endl << endl;
+        }
+
+        totalOverdueDays += daysOverdue;
+    }
+
+    cout << "Number of Overdue Assets: " << coAssets.size() << endl;
+    cout << "Total fees to be collected: " << totalOverdueDays << "$\n\n";
 }
 
 void overdueMemberList (const vector<shared_ptr<Library> > &L, const Date today) {
@@ -468,13 +522,13 @@ void areaCodeList (const vector<shared_ptr<Library> > &L, const Date today)
 
     for (unsigned int i = 0; i < L.size(); i++)
         if (L[i]->IsA() == Library::MEMBER && L[i]->GetPhone().substr(0, 3) == areaCode)
-	    areaMembers.push_back(L[i]);
+        areaMembers.push_back(L[i]);
 
     sort(areaMembers.begin(), areaMembers.end(), IDSort);
 
     for (unsigned int i = 0; i < areaMembers.size(); i++)
         cout << areaMembers[i]->GetID() << "  " << setw(20) << setfill(' ') << left
-	     << areaMembers[i]->GetName() << "  " << areaMembers[i]->GetPhone() << endl;
+         << areaMembers[i]->GetName() << "  " << areaMembers[i]->GetPhone() << endl;
 
     cout << endl;
 

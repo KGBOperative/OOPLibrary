@@ -63,7 +63,7 @@ int main() {
                 
                 try {
                     removeItem(L, id);
-                } catch (const char* e) {
+                } catch (const string e) {
                     cout << "Error: " << e << endl;
                 }
 
@@ -76,7 +76,7 @@ int main() {
                 
                 try {
                     removeItem(L, id);
-                } catch (const char* e) {
+                } catch (const string e) {
                     cout << "Error: " << e << endl;
                 }
 
@@ -96,7 +96,7 @@ int main() {
 
                 try {
                     checkoutAsset(L, memberID, assetID, date, issue);
-                } catch (const char* e) {
+                } catch (const string e) {
                     cout << "Error: " << e << endl;
                 }
 
@@ -115,7 +115,7 @@ int main() {
 
                 try {
                     returnAsset(L, memberID, assetID);
-                } catch (const char* e) {
+                } catch (const string e) {
                     cout << "Error: " << e << endl;
                 }
 

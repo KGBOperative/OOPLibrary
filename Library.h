@@ -56,7 +56,7 @@ class Library
         virtual vector<Date> GetCheckoutDates (void) const;
 
         // This function returns the Members that have an asset checked out
-        vector<shared_ptr<Library> > GetCheckedoutBy (void) const;
+        virtual vector<shared_ptr<Library> > GetCheckedoutBy (void) const;
 
         // This function will only be implemented by Periodical
         virtual void AddIssue(int volume, int number, string pubDate);

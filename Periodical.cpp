@@ -63,6 +63,8 @@ vector<Date> Periodical::GetDueDates (void) {
 }
 
 vector<shared_ptr<Library> > Periodical::GetCheckedoutBy(void) const {
+    debug << "checkedoutby list has " << Issues.size() << "entries\n";
+
     vector<shared_ptr<Library> > coBy(Issues.size(), NULL);
 
     for (unsigned int i = 0; i < Issues.size(); ++i) 
